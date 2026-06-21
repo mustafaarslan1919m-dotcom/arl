@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🌾 Çiftlik Pro 3D — Mega Deluxe</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#f5c518;--gold2:#c98a00;
+  --green:#27ae60;--green2:#1d8348;
+  --teal:#1abc9c;--purple:#8e44ad;
+  --red:#e74c3c;--blue:#2980b9;--orange:#e67e22;
+  --bg:#03080a;
+  --panel:rgba(3,12,8,0.96);
+  --border:rgba(39,174,96,0.18);
+  --text:#dff5e8;--text2:rgba(180,230,200,0.55);
+  --accent:#16a085;
+}
+body{background:var(--bg);font-family:'Nunito',sans-serif;overflow:hidden;color:var(--text)}
+#c{position:fixed;inset:0;width:100vw;height:100vh}
+
+/* ══ LOGIN ══ */
+#ls{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 35% 45%,#061a10 0%,#030b05 55%,#000 100%)}
+.lbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lf{position:absolute;animation:lfu linear infinite;opacity:0}
+@keyframes lfu{0%{transform:translateY(105vh) rotate(0deg);opacity:0}8%{opacity:.15}92%{opacity:.12}100%{transform:translateY(-8vh) rotate(400deg);opacity:0}}
+.lcard{position:relative;z-index:5;isolation:isolate;pointer-events:auto;background:rgba(3,14,8,.95);border:1px solid rgba(39,174,96,.25);
+  border-radius:22px;padding:44px 48px;width:430px;max-width:96vw;backdrop-filter:blur(18px);
+  box-shadow:0 0 100px rgba(26,188,156,.08),0 40px 80px rgba(0,0,0,.7)}
+.llogo{text-align:center;font-size:54px;margin-bottom:6px;animation:lp 3.5s ease-in-out infinite}
+@keyframes lp{0%,100%{filter:drop-shadow(0 0 18px rgba(39,174,96,.4))}50%{filter:drop-shadow(0 0 38px rgba(245,193,24,.6))}}
+.ltitle{font-family:'Fredoka One',cursive;font-size:2.3rem;text-align:center;margin-bottom:2px;
+  background:linear-gradient(130deg,#f5c518 0%,#1abc9c 50%,#f5c518 100%);background-size:200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:lts 4s linear infinite}
+@keyframes lts{0%{background-position:0%}100%{background-position:200%}}
+.lsub{text-align:center;font-size:.72rem;color:var(--text2);letter-spacing:2px;margin-bottom:28px}
+.ltabs{display:flex;gap:3px;background:rgba(0,0,0,.35);border-radius:10px;padding:4px;margin-bottom:22px;position:relative;z-index:6}
+.ltab{flex:1;text-align:center;padding:8px;border-radius:7px;cursor:pointer;font-size:11px;font-weight:800;
+  color:var(--text2);transition:all .2s;letter-spacing:.5px;position:relative;z-index:6}
+.ltab.on{background:rgba(26,188,156,.18);color:var(--teal);border:1px solid rgba(26,188,156,.3)}
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:10px;font-weight:800;color:var(--text2);letter-spacing:1.5px;margin-bottom:5px}
+.fi{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(39,174,96,.2);border-radius:10px;
+  padding:12px 15px;color:var(--text);font-size:13px;font-weight:600;font-family:'Nunito',sans-serif;
+  outline:none;transition:border .2s}
+.fi:focus{border-color:rgba(26,188,156,.6);box-shadow:0 0 0 3px rgba(26,188,156,.07)}
+.fi::placeholder{color:rgba(180,230,200,.2)}
+.lbtn{width:100%;padding:14px;border:none;border-radius:12px;position:relative;z-index:6;
+  background:linear-gradient(135deg,#16a085,#1abc9c,#148f77);
+  color:#001810;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;
+  letter-spacing:.5px;transition:transform .15s,box-shadow .15s;margin-top:6px;
+  box-shadow:0 4px 22px rgba(26,188,156,.3)}
+.lbtn:hover{transform:scale(1.02);box-shadow:0 6px 32px rgba(26,188,156,.5)}
+.lor{text-align:center;font-size:10px;color:var(--text2);margin:12px 0}
+.gbtn{width:100%;padding:10px;border:1px solid rgba(245,197,24,.28);border-radius:10px;position:relative;z-index:6;
+  background:rgba(245,197,24,.07);color:var(--gold);font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .2s}
+.gbtn:hover{background:rgba(245,197,24,.15);border-color:rgba(245,197,24,.5)}
+.lerr{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:8px;
+  padding:9px 13px;font-size:11px;color:#ff8877;margin-bottom:10px;display:none}
+.lprofiles{margin-top:18px;border-top:1px solid rgba(39,174,96,.1);padding-top:14px}
+.lpti{font-size:10px;letter-spacing:2px;color:var(--text2);margin-bottom:9px;font-weight:800}
+.lpi{display:flex;align-items:center;gap:9px;padding:8px 11px;background:rgba(0,0,0,.22);
+  border:1px solid rgba(39,174,96,.1);border-radius:9px;cursor:pointer;margin-bottom:5px;transition:all .2s}
+.lpi:hover{background:rgba(26,188,156,.09);border-color:rgba(26,188,156,.3)}
+.lav{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#16a085,#f5c518);
+  display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+
+/* ══ HUD ══ */
+#hud{position:fixed;top:0;left:0;right:0;z-index:20;display:none;pointer-events:none}
+#hud-top{display:flex;gap:7px;padding:9px 12px;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(180deg,rgba(0,14,5,.75) 0%,transparent);pointer-events:all}
+.pill{background:rgba(3,15,8,.9);border:1px solid var(--border);border-radius:999px;
+  padding:5px 13px;font-size:12px;font-weight:700;backdrop-filter:blur(8px);
+  display:flex;align-items:center;gap:5px;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+.pi{font-size:14px}
+#npill{display:flex}
+.xbm{width:58px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.xbmf{height:100%;background:linear-gradient(90deg,#8e44ad,#bb8fce);border-radius:3px;transition:width .5s}
+#dab{background:linear-gradient(135deg,#c98a00,#f5c518);border:none;border-radius:999px;
+  padding:7px 18px;color:#1a0d00;font-size:12px;font-weight:900;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:transform .12s;box-shadow:0 3px 16px rgba(245,197,24,.3);
+  letter-spacing:.8px}
+#dab:hover{transform:scale(1.05);box-shadow:0 5px 24px rgba(245,197,24,.5)}
+#svb{background:rgba(26,188,156,.13);border:1px solid rgba(26,188,156,.32);border-radius:999px;
+  padding:5px 13px;color:#80ffe0;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s}
+#svb:hover{background:rgba(26,188,156,.25)}
+#lgb{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.22);border-radius:999px;
+  padding:5px 11px;color:#ff8899;font-size:10px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s}
+#lgb:hover{background:rgba(231,76,60,.22)}
+.upill{background:rgba(142,68,173,.2);border-color:rgba(142,68,173,.38)}
+
+/* ══ MANUEL SÜRÜŞ PANEL ══ */
+#drive-panel{position:fixed;top:60px;left:12px;z-index:20;background:rgba(3,14,8,.92);
+  border:1px solid rgba(245,197,24,.35);border-radius:14px;padding:9px 13px;
+  font-size:11px;line-height:1.9;pointer-events:none;backdrop-filter:blur(8px);display:none;
+  box-shadow:0 0 20px rgba(245,197,24,.15)}
+#drive-panel.active{border-color:rgba(26,188,156,.6);box-shadow:0 0 24px rgba(26,188,156,.25)}
+
+/* ══ SIDE ══ */
+#side{position:fixed;right:0;top:0;bottom:0;width:295px;z-index:20;
+  background:linear-gradient(175deg,rgba(3,14,8,.98) 0%,rgba(2,10,6,.98) 100%);
+  border-left:1px solid var(--border);display:none;flex-direction:column;
+  pointer-events:all;backdrop-filter:blur(14px)}
+#stabs{display:flex;border-bottom:1px solid var(--border)}
+.stb{flex:1;padding:10px 2px;text-align:center;font-size:11px;font-weight:800;
+  color:rgba(180,230,200,.3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.stb.on{color:var(--teal);border-bottom-color:var(--teal);background:rgba(26,188,156,.06)}
+#sbod{flex:1;overflow-y:auto;padding:11px}
+
+/* ══ TOOLBAR ══ */
+#toolbar{position:fixed;bottom:0;left:0;right:295px;z-index:20;
+  background:linear-gradient(0deg,rgba(3,14,8,.98),rgba(3,14,8,.92));
+  border-top:1px solid var(--border);padding:6px 10px;display:none;
+  gap:5px;align-items:center;flex-wrap:wrap;pointer-events:all;backdrop-filter:blur(10px);
+  max-height:84px;overflow-y:auto}
+.tbtn,.sbtn{background:rgba(255,255,255,.04);border:1px solid rgba(39,174,96,.18);
+  border-radius:8px;padding:5px 9px;cursor:pointer;font-size:10px;font-weight:700;
+  color:var(--text);transition:all .14s;display:flex;align-items:center;gap:4px;
+  font-family:'Nunito',sans-serif;white-space:nowrap;line-height:1.2;flex-shrink:0}
+.tbtn:hover,.sbtn:hover{border-color:rgba(26,188,156,.55);background:rgba(26,188,156,.11);color:#80ffe0}
+.tbtn.on{background:rgba(230,126,34,.28);border-color:var(--orange);color:var(--orange)}
+.sbtn.on{background:rgba(26,188,156,.22);border-color:var(--teal);color:#80ffe0}
+.tbtn.drive-on{background:rgba(245,197,24,.22);border-color:var(--gold);color:var(--gold)}
+.tsep{width:1px;height:26px;background:rgba(39,174,96,.14);flex-shrink:0}
+.tlbl{font-size:9px;color:rgba(180,230,200,.38);letter-spacing:1.2px;white-space:nowrap}
+
+/* ══ D-PAD ══ */
+#dpad{position:fixed;bottom:90px;left:12px;z-index:22;display:none}
+.dpad-row{display:flex;justify-content:center;margin-bottom:3px}
+.dpad-btn{width:52px;height:52px;background:rgba(3,14,8,.88);border:1px solid rgba(245,197,24,.3);
+  border-radius:12px;color:#f5c518;font-size:20px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;
+  transition:background .1s}
+.dpad-btn:active,.dpad-btn.pressed{background:rgba(245,197,24,.28);border-color:rgba(245,197,24,.7)}
+.dpad-center{width:52px;height:52px;background:rgba(0,0,0,.3);border-radius:12px;border:1px solid rgba(39,174,96,.12)}
+
+/* ══ SIDE PANELS ══ */
+.ps{margin-bottom:13px}
+.pt{font-size:9px;letter-spacing:2px;color:rgba(40,180,100,.4);margin-bottom:7px;font-weight:800}
+.pbtn{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(39,174,96,.14);
+  border-radius:8px;padding:8px 11px;cursor:pointer;font-size:11px;font-weight:700;
+  color:var(--text);text-align:left;transition:all .14s;font-family:'Nunito',sans-serif;
+  display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.pbtn:hover{background:rgba(26,188,156,.09);border-color:rgba(26,188,156,.38)}
+.pbtn:disabled{opacity:.22;cursor:default}
+.pbtn .bg{margin-left:auto;font-size:9px;color:var(--teal)}
+.sc{background:rgba(0,0,0,.22);border:1px solid rgba(39,174,96,.12);border-radius:10px;padding:9px;margin-bottom:7px;transition:border-color .2s}
+.sc:hover{border-color:rgba(26,188,156,.28)}
+.sc h4{font-size:11px;font-weight:800;margin-bottom:2px}
+.sc p{font-size:9px;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.sbuy{background:linear-gradient(135deg,#16a085,#1abc9c);border:none;border-radius:7px;
+  padding:5px 11px;color:#001810;font-size:11px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:opacity .15s,transform .1s}
+.sbuy:hover{transform:scale(1.04)}
+.sbuy:disabled{opacity:.2;cursor:default;transform:none}
+.otg{font-size:9px;color:var(--teal);letter-spacing:1px;font-weight:800}
+.ii{display:flex;justify-content:space-between;align-items:center;
+  background:rgba(0,0,0,.18);border:1px solid rgba(39,174,96,.09);
+  border-radius:8px;padding:7px 9px;margin-bottom:5px}
+.slb{background:rgba(26,188,156,.16);border:1px solid rgba(26,188,156,.28);
+  border-radius:6px;padding:4px 9px;color:#80ffe0;font-size:10px;font-weight:700;
+  cursor:pointer;font-family:'Nunito',sans-serif;transition:all .14s}
+.slb:hover{background:rgba(26,188,156,.28)}
+.tstt{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:5px}
+.bw{height:5px;background:rgba(255,255,255,.09);border-radius:3px;overflow:hidden;flex:1;margin:0 7px}
+.bf{height:100%;border-radius:3px;transition:width .4s}
+
+/* ══ BADGES ══ */
+#sbadge,#wbadge{position:fixed;z-index:20;background:rgba(3,14,8,.9);border:1px solid var(--border);
+  border-radius:12px;padding:7px 13px;font-size:11px;text-align:center;pointer-events:none;backdrop-filter:blur(8px)}
+#sbadge{top:60px;left:12px}
+#wbadge{top:60px;left:134px}
+#lvbadge{position:fixed;top:60px;left:258px;z-index:20;background:rgba(90,20,140,.28);
+  border:1px solid rgba(142,68,173,.38);border-radius:12px;padding:7px 13px;font-size:11px;
+  text-align:center;pointer-events:none;backdrop-filter:blur(8px);display:none}
+#infob{position:fixed;bottom:66px;left:12px;z-index:20;background:rgba(3,14,8,.92);
+  border:1px solid var(--border);border-radius:12px;padding:7px 13px;font-size:11px;
+  line-height:1.9;pointer-events:none;backdrop-filter:blur(8px);max-width:290px;display:none}
+#mktb{position:fixed;top:60px;right:307px;z-index:20;background:rgba(245,197,24,.1);
+  border:1px solid rgba(245,197,24,.28);border-radius:12px;padding:7px 13px;font-size:11px;
+  line-height:1.7;pointer-events:none;backdrop-filter:blur(8px);display:none}
+
+/* ══ TOAST ══ */
+#toast{position:fixed;bottom:78px;left:50%;transform:translateX(-50%);z-index:50;
+  background:rgba(3,14,8,.98);border:1px solid rgba(26,188,156,.28);border-radius:12px;
+  padding:9px 20px;font-size:13px;font-weight:700;pointer-events:none;opacity:0;
+  transition:opacity .3s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.45)}
+#toast.on{opacity:1}
+
+/* ══ TRACTOR BORDER ══ */
+#tov{position:fixed;inset:0;z-index:15;pointer-events:none;border:0px solid transparent;transition:border .3s}
+#tov.go{border:3px solid rgba(245,197,24,.45)}
+
+/* ══ LEVEL UP ══ */
+#lvpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:100;
+  background:rgba(6,3,12,.98);border:2px solid rgba(142,68,173,.55);border-radius:20px;
+  padding:38px 56px;text-align:center;box-shadow:0 0 120px rgba(142,68,173,.25);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+#lvpop.on{transform:translate(-50%,-50%) scale(1)}
+.lvn{font-family:'Fredoka One';font-size:4.2rem;color:#bb8fce;display:block}
+
+/* ══ MARKET POPUP ══ */
+#mktpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:100;
+  background:rgba(3,12,8,.98);border:1px solid rgba(26,188,156,.3);border-radius:18px;
+  padding:28px;width:380px;max-height:80vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#mktpop.on{transform:translate(-50%,-50%) scale(1)}
+
+/* ══ FISHING POPUP ══ */
+#fishpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:101;
+  background:rgba(2,8,18,.98);border:1px solid rgba(41,128,185,.35);border-radius:18px;
+  padding:24px;width:340px;box-shadow:0 20px 60px rgba(0,0,0,.7);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#fishpop.on{transform:translate(-50%,-50%) scale(1)}
+
+/* ══ MOBİL TOHUM PANELİ ══ */
+@media(min-width:701px){#mob-seed-panel{display:none !important}#tb-seed-toggle{display:none !important}}
+@media(max-width:700px){#toolbar-row2{display:none !important}}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(26,188,156,.28);border-radius:2px}
+
+/* ══ MOBİL OVERLAY ══ */
+#mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:19;backdrop-filter:blur(2px)}
+#mob-side-btn{display:none;position:fixed;right:12px;bottom:90px;z-index:22;
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#16a085,#1abc9c);
+  border:none;font-size:22px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(26,188,156,.4);
+  align-items:center;justify-content:center}
+
+/* ══ MOBİL ══ */
+@media(max-width:700px){
+  .lcard{padding:28px 20px;width:calc(100vw - 24px);max-width:100%}
+  .ltitle{font-size:1.8rem}.llogo{font-size:42px}
+  #hud-top{gap:4px;padding:6px 8px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  #hud-top::-webkit-scrollbar{display:none}
+  .pill{padding:4px 9px;font-size:11px;gap:4px}.pi{font-size:13px}
+  #dab{padding:5px 12px;font-size:11px}#svb,#lgb{padding:4px 9px;font-size:10px}
+  #sbadge{top:auto;bottom:260px;left:8px}
+  #wbadge{top:auto;bottom:260px;left:100px}
+  #lvbadge{top:auto;bottom:260px;left:192px}
+  #infob{bottom:255px;left:8px;max-width:calc(100vw - 16px);font-size:10px}
+  #mktb{top:auto;bottom:260px;right:8px;left:auto}
+  #toast{bottom:255px;font-size:12px;white-space:normal;text-align:center;max-width:calc(100vw - 32px)}
+  #drive-panel{top:auto;bottom:260px;left:8px}
+  #side{width:min(295px,88vw);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex !important}
+  #side.mob-open{transform:translateX(0)}
+  #mob-overlay.mob-open{display:block}
+  #mob-side-btn{display:flex}
+  #dpad{display:block}
+  #toolbar{right:0;bottom:0;max-height:none;padding:4px 6px;overflow-x:hidden;flex-direction:column !important}
+  #toolbar-row1{overflow-x:auto;flex-wrap:nowrap}
+  #toolbar-row1::-webkit-scrollbar{display:none}
+  #toolbar-row2{display:none !important}
+  .tbtn,.sbtn{padding:6px 10px;font-size:11px;min-height:38px;min-width:54px;white-space:nowrap}
+  .tsep{height:30px}
+  #mob-seed-panel{display:none;padding-bottom:env(safe-area-inset-bottom,20px)}
+  #mktpop{width:calc(100vw - 24px);max-height:82vh;padding:18px}
+  #fishpop{width:calc(100vw - 24px);padding:18px}
+  #lvpop{width:calc(100vw - 48px);padding:28px 20px}
+  .lvn{font-size:3rem}
+}
+
+/* ══ QUEST ══ */
+.qi{background:rgba(142,68,173,.09);border:1px solid rgba(142,68,173,.18);border-radius:9px;padding:9px;margin-bottom:7px}
+.qt{font-size:11px;font-weight:800;margin-bottom:3px}
+.qd{font-size:9px;color:var(--text2);margin-bottom:5px}
+.qb{height:4px;background:rgba(255,255,255,.09);border-radius:3px;overflow:hidden;margin-bottom:3px}
+.qf{height:100%;background:linear-gradient(90deg,#8e44ad,#bb8fce);border-radius:3px;transition:width .5s}
+.qr{font-size:9px;color:var(--gold)}.qdn{color:var(--teal);font-size:9px;font-weight:800}
+.statrow{display:flex;justify-content:space-between;font-size:10px;margin-bottom:4px;line-height:1.6}
+.sv{font-weight:700;color:var(--teal)}
+.ancard{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.2);
+  border:1px solid rgba(39,174,96,.1);border-radius:8px;padding:7px 9px;margin-bottom:5px}
+
+/* ══ PARTİKÜL CANVAS ══ */
+#pcanvas{position:fixed;inset:0;pointer-events:none;z-index:16}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="ls">
+  <div class="lbg" id="lbg"></div>
+  <div class="lcard">
+    <div class="llogo">🌾</div>
+    <div class="ltitle">Çiftlik Pro 3D</div>
+    <div class="lsub">MEGA DELUXE EDİSYON · v4.0</div>
+    <div class="ltabs">
+      <div class="ltab on" onclick="ltab('login')" id="lt-login">Giriş Yap</div>
+      <div class="ltab" onclick="ltab('reg')" id="lt-reg">Yeni Hesap</div>
+    </div>
+    <div id="lerr" class="lerr"></div>
+    <div id="lf-login">
+      <div class="fg"><label class="fl">KULLANICI ADI</label><input class="fi" id="iu" type="text" placeholder="Kullanıcı adın..." autocomplete="off"/></div>
+      <div class="fg"><label class="fl">ŞİFRE</label><input class="fi" id="ip" type="password" placeholder="Şifren..."/></div>
+      <button class="lbtn" onclick="doLogin()">🌾 Çiftliğe Giriş Yap</button>
+      <div class="lor">— veya —</div>
+      <button class="gbtn" onclick="doGuest()">🎭 Misafir Olarak Oyna</button>
+    </div>
+    <div id="lf-reg" style="display:none">
+      <div class="fg"><label class="fl">ÇİFTÇİ ADI</label><input class="fi" id="ru" type="text" placeholder="Adın..."/></div>
+      <div class="fg"><label class="fl">ŞİFRE</label><input class="fi" id="rp" type="password" placeholder="Şifre..."/></div>
+      <div class="fg"><label class="fl">ÇİFTLİK ADI</label><input class="fi" id="rf" type="text" placeholder="Çiftlik adı..." value="Huzurlu Çiftlik"/></div>
+      <button class="lbtn" onclick="doReg()">🌱 Çiftliği Kur!</button>
+    </div>
+    <div style="text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid rgba(39,174,96,.1);font-size:10px;color:rgba(180,230,200,.3);letter-spacing:1.5px">
+      Made by <span style="color:rgba(26,188,156,.6);font-weight:800">Mustafa Arslan</span>
+    </div>
+    <div id="lsaved" class="lprofiles" style="display:none">
+      <div class="lpti">KAYITLI HESAPLAR</div>
+      <div id="lplist"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CANVAS ══ -->
+<canvas id="c"></canvas>
+<canvas id="pcanvas"></canvas>
+<div id="tov"></div>
+
+<!-- ══ HUD ══ -->
+<div id="hud">
+  <div id="hud-top">
+    <div class="pill"><span class="pi">💰</span><span id="hg">0</span>₺</div>
+    <div class="pill"><span class="pi">📅</span>Gün <span id="hd">1</span></div>
+    <div class="pill"><span class="pi">🌡</span><span id="hs">İlkbahar</span></div>
+    <div class="pill" id="fpill" style="display:none"><span class="pi">⛽</span><span id="hf">100</span>%</div>
+    <div class="pill" id="fpop" style="display:none"><span class="pi">🐟</span><span id="hfish">0</span></div>
+    <div class="pill upill"><span class="pi">👤</span><span id="hun">?</span></div>
+    <div class="pill" id="npill">
+      <span class="pi">⭐</span>Lv.<span id="hlv">1</span>
+      <div class="xbm"><div class="xbmf" id="xbmf" style="width:0%"></div></div>
+    </div>
+    <button id="dab" onclick="nextDay()">⏭ Sonraki Gün</button>
+    <button id="svb" onclick="saveGame()">💾 Kaydet</button>
+    <button id="lgb" onclick="doLogout()">⬅ Çıkış</button>
+  </div>
+</div>
+
+<!-- ══ BADGES ══ -->
+<div id="sbadge" style="display:none">
+  <div id="sbi" style="font-size:22px">🌸</div>
+  <div id="sbn" style="font-size:10px;margin-top:1px">İlkbahar</div>
+  <div id="sbd" style="font-size:9px;opacity:.45">1/30</div>
+</div>
+<div id="wbadge" style="display:none">
+  <div id="wbi" style="font-size:22px">☀️</div>
+  <div id="wbl" style="font-size:10px;margin-top:1px">Güneşli</div>
+</div>
+<div id="lvbadge">
+  <div id="lbn" style="font-size:20px;font-weight:900;color:#bb8fce">1</div>
+  <div style="font-size:9px;color:rgba(190,140,220,.55)">SEVİYE</div>
+</div>
+
+<!-- ══ MANUEL SÜRÜŞ PANEL ══ -->
+<div id="drive-panel">
+  <div style="font-size:10px;font-weight:800;color:var(--gold);margin-bottom:4px">🚜 MANUEL SÜRÜŞ</div>
+  <div id="dp-tool" style="font-size:10px;color:var(--teal)">Araç: —</div>
+  <div id="dp-speed" style="font-size:9px;color:var(--text2)">WASD / Ok tuşları</div>
+  <div id="dp-fuel" style="font-size:9px;color:var(--text2)">⛽ <span id="dp-fuel-val">100</span>%</div>
+</div>
+
+<div id="infob" style="display:none"><div id="inft">Bir parsel seçmek için tıkla</div></div>
+<div id="mktb" style="display:none"><div id="mktt">📈 Piyasa</div></div>
+
+<!-- ══ TOAST & POPUPS ══ -->
+<div id="toast"></div>
+
+<div id="lvpop">
+  <div style="font-size:2rem;margin-bottom:6px">🎉</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:3px">SEVİYE ATLADIN!</div>
+  <span class="lvn" id="lvn">2</span>
+  <div style="font-size:11px;color:var(--gold);margin-top:8px" id="lvr"></div>
+  <button onclick="closeLvPop()" style="margin-top:16px;padding:8px 22px;background:linear-gradient(135deg,#8e44ad,#bb8fce);border:none;border-radius:8px;color:white;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">Harika!</button>
+</div>
+
+<div id="mktpop">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div style="font-family:'Fredoka One';font-size:1.3rem;color:var(--gold)">📈 Haftanın Piyasası</div>
+    <button onclick="closeMkt()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:5px 10px;color:var(--text);cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700">✕ Kapat</button>
+  </div>
+  <div id="mktcont"></div>
+</div>
+
+<div id="fishpop">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div style="font-family:'Fredoka One';font-size:1.2rem;color:#2980b9">🎣 Balık Tutma</div>
+    <button onclick="closeFish()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:5px 10px;color:var(--text);cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700">✕ Kapat</button>
+  </div>
+  <div id="fishcont"></div>
+</div>
+
+<!-- ══ D-PAD ══ -->
+<div id="dpad">
+  <div class="dpad-row"><div class="dpad-btn" id="dp-up">▲</div></div>
+  <div class="dpad-row" style="gap:4px">
+    <div class="dpad-btn" id="dp-left">◀</div>
+    <div class="dpad-center"></div>
+    <div class="dpad-btn" id="dp-right">▶</div>
+  </div>
+  <div class="dpad-row"><div class="dpad-btn" id="dp-down">▼</div></div>
+</div>
+
+<!-- ══ MOBİL OVERLAY ══ -->
+<div id="mob-overlay" onclick="closeMobSide()"></div>
+<button id="mob-side-btn" onclick="toggleMobSide()">🎒</button>
+
+<!-- ══ SIDE PANEL ══ -->
+<div id="side">
+  <div id="stabs">
+    <div class="stb on" onclick="setSide('trk')">🚜</div>
+    <div class="stb" onclick="setSide('shp')">🏪</div>
+    <div class="stb" onclick="setSide('inv')">🎒</div>
+    <div class="stb" onclick="setSide('qst')">📜</div>
+    <div class="stb" onclick="setSide('nbr')">👥</div>
+    <div class="stb" onclick="setSide('frd')">🌍</div>
+    <div class="stb" onclick="setSide('log')">📋</div>
+  </div>
+  <div id="sbod"></div>
+</div>
+
+<!-- ══ TOOLBAR ══ -->
+<div id="toolbar" style="flex-direction:column;padding:4px 6px;gap:3px">
+  <div id="toolbar-row1" style="display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:none;width:100%;flex-shrink:0">
+    <button class="tbtn on" id="tb-hoe" onclick="setTool('hoe')">⛏ Çapa</button>
+    <button class="tbtn" id="tb-water" onclick="setTool('water')">💧 Sula</button>
+    <button class="tbtn" id="tb-fertilize" onclick="setTool('fertilize')">🧪 Gübre</button>
+    <button class="tbtn" id="tb-sickle" onclick="setTool('sickle')">🌾 Hasat</button>
+    <button class="tbtn" id="tb-plow" onclick="setTool('plow')">🔄 Temizle</button>
+    <div class="tsep"></div>
+    <button class="tbtn" id="tb-seed-toggle" onclick="toggleSeedPanel()" style="border-color:rgba(39,174,96,.45);color:#80ffe0">🌱 Tohum</button>
+    <div class="tsep"></div>
+    <!-- MANUEL SÜRÜŞ BUTONU -->
+    <button class="tbtn" id="tb-drive" onclick="toggleDriveMode()" style="border-color:rgba(245,197,24,.35);color:var(--gold)">🚜 Sürmek</button>
+    <div class="tsep"></div>
+    <button class="tbtn" id="tb-fish" onclick="openFish()" style="border-color:rgba(41,128,185,.35);color:#74b9ff">🎣 Balık</button>
+    <button class="tbtn" id="tb-mkt" onclick="openMkt()" style="border-color:rgba(245,197,24,.28);color:var(--gold)">📈 Piyasa</button>
+  </div>
+  <div id="toolbar-row2" style="display:flex;gap:4px;align-items:center;overflow-x:auto;scrollbar-width:none;width:100%;flex-shrink:0">
+    <span class="tlbl" style="flex-shrink:0">🌱 TOHUM:</span>
+    <div id="sbtns" style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none"></div>
+  </div>
+</div>
+
+<!-- ══ MOBİL TOHUM PANELİ ══ -->
+<div id="mob-seed-panel" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:25;
+  background:rgba(3,14,8,.97);border-top:2px solid rgba(26,188,156,.4);
+  padding:12px 10px 20px;backdrop-filter:blur(12px)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <span style="color:#80ffe0;font-size:13px;font-weight:800">🌱 TOHUM SEÇ</span>
+    <button onclick="closeSeedPanel()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+      border-radius:6px;padding:4px 10px;color:#ccc;font-size:12px;cursor:pointer;font-family:'Nunito',sans-serif">✕ Kapat</button>
+  </div>
+  <div id="mob-sbtns" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-height:55vh;overflow-y:auto"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+
+// ═══════════════════════════════════
+//  AUTH
+// ═══════════════════════════════════
+const getUsers=()=>{try{return JSON.parse(localStorage.getItem('cfp3_u')||'{}')}catch{return {}}};
+const saveUsers=u=>localStorage.setItem('cfp3_u',JSON.stringify(u));
+let cUser=null,farmName='Çiftliğim';
+
+function ltab(t){
+  ['login','reg'].forEach(x=>{
+    document.getElementById('lf-'+x).style.display=x===t?'block':'none';
+    document.getElementById('lt-'+x).classList.toggle('on',x===t);
+  });
+  document.getElementById('lerr').style.display='none';
+}
+function showErr(m){const e=document.getElementById('lerr');e.textContent=m;e.style.display='block';}
+function doLogin(){
+  const u=document.getElementById('iu').value.trim(),p=document.getElementById('ip').value;
+  if(!u||!p){showErr('Tüm alanları doldur!');return;}
+  const users=getUsers();
+  if(!users[u]){showErr('Kullanıcı bulunamadı!');return;}
+  if(users[u].pw!==btoa(p)){showErr('Şifre yanlış!');return;}
+  loginAs(u,users[u]);
+}
+function doReg(){
+  try{
+    const u=document.getElementById('ru').value.trim(),p=document.getElementById('rp').value;
+    const fn=document.getElementById('rf').value.trim()||'Huzurlu Çiftlik';
+    if(!u||!p){showErr('Tüm alanları doldur!');return;}
+    if(u.length<2||u.length>18){showErr('Kullanıcı adı 2-18 karakter!');return;}
+    if(p.length<3){showErr('Şifre en az 3 karakter!');return;}
+    const users=getUsers();
+    if(users[u]){showErr('Bu kullanıcı adı alınmış!');return;}
+    users[u]={pw:btoa(p),fn,date:new Date().toLocaleDateString('tr-TR'),st:null};
+    saveUsers(users);loginAs(u,users[u]);
+  }catch(err){showErr('Hata: '+err.message);}
+}
+function doGuest(){try{loginAs('Misafir',{fn:'Misafir Çiftliği',guest:true,st:null});}catch(err){showErr('Hata: '+err.message);}}
+function loginAs(un,ud){
+  try{
+    cUser=un;farmName=ud.fn||'Çiftliğim';
+    if(ud.st)Object.assign(S,ud.st);else resetState();
+    document.getElementById('hun').textContent=un;
+    const ls=document.getElementById('ls');
+    ls.style.transition='opacity .5s';ls.style.opacity='0';
+    setTimeout(()=>{ls.style.display='none';startGame();},500);
+  }catch(err){showErr('Giriş hatası: '+err.message);}
+}
+function doLogout(){if(!confirm('Çıkmak istiyor musun?'))return;saveGame();cUser=null;location.reload();}
+function populateProfiles(){
+  const users=getUsers(),keys=Object.keys(users).filter(k=>k!=='Misafir');
+  if(!keys.length)return;
+  document.getElementById('lsaved').style.display='block';
+  document.getElementById('lplist').innerHTML=keys.map(u=>`
+    <div class="lpi" onclick="qLogin('${u}')">
+      <div class="lav">🌾</div>
+      <div><div style="font-size:12px;font-weight:700">${u}</div>
+      <div style="font-size:9px;color:var(--text2)">${users[u].fn||''} · ${users[u].date||''}</div></div>
+      <span style="margin-left:auto;font-size:11px;color:rgba(26,188,156,.45)">→</span>
+    </div>`).join('');
+}
+function qLogin(u){document.getElementById('iu').value=u;document.getElementById('ip').focus();}
+function spawnFloaters(){
+  const emj=['🌾','🌽','🍅','🥕','🚜','🌻','🍓','🌸','☀️','🌧','🐄','🐔','🐟','🍯','🌴'];
+  const bg=document.getElementById('lbg');
+  for(let i=0;i<28;i++){
+    const e=document.createElement('div');e.className='lf';
+    e.textContent=emj[Math.floor(Math.random()*emj.length)];
+    e.style.cssText=`left:${Math.random()*100}%;font-size:${1.2+Math.random()*2}rem;animation-duration:${7+Math.random()*14}s;animation-delay:${Math.random()*18}s`;
+    bg.appendChild(e);
+  }
+}
+spawnFloaters();populateProfiles();
+
+// ═══════════════════════════════════
+//  DATA
+// ═══════════════════════════════════
+const CROPS=[
+  {id:'wheat',    nm:'Buğday',    em:'🌾',buy:20, sell:60, days:22,sea:['sp','au'],wd:2,col:0xd4a017,sh:1.4,xp:5},
+  {id:'corn',     nm:'Mısır',     em:'🌽',buy:25, sell:80, days:14,sea:['su'],    wd:2,col:0xffee00,sh:1.8,xp:7},
+  {id:'tomato',   nm:'Domates',   em:'🍅',buy:30, sell:100,days:11,sea:['su'],    wd:1,col:0xff2222,sh:1.0,xp:8},
+  {id:'potato',   nm:'Patates',   em:'🥔',buy:22, sell:70, days:14,sea:['sp','au'],wd:3,col:0xc8a030,sh:0.6,xp:6},
+  {id:'carrot',   nm:'Havuç',     em:'🥕',buy:18, sell:55, days:11,sea:['sp','au'],wd:2,col:0xff7722,sh:0.8,xp:5},
+  {id:'sunflower',nm:'Ayçiçeği', em:'🌻',buy:20, sell:65, days:13,sea:['su'],    wd:2,col:0xffcc00,sh:2.0,xp:6},
+  {id:'bean',     nm:'Fasulye',   em:'🫘',buy:12, sell:40, days:8, sea:['su','sp'],wd:2,col:0x22aa22,sh:0.9,xp:4},
+  {id:'pumpkin',  nm:'Kabak',     em:'🎃',buy:18, sell:55, days:7, sea:['au'],    wd:2,col:0xff6600,sh:0.7,xp:5},
+  {id:'strawberry',nm:'Çilek',   em:'🍓',buy:40, sell:150,days:10,sea:['sp'],    wd:1,col:0xff2244,sh:0.5,xp:12},
+  {id:'rice',     nm:'Pirinç',    em:'🍚',buy:35, sell:110,days:18,sea:['su'],    wd:1,col:0xeeeedd,sh:1.2,xp:9},
+  {id:'cotton',   nm:'Pamuk',     em:'☁️',buy:30, sell:120,days:22,sea:['su'],    wd:2,col:0xffffff,sh:1.1,xp:10},
+  {id:'apple',    nm:'Elma',      em:'🍎',buy:80, sell:280,days:25,sea:['sp','su'],wd:3,col:0xcc2222,sh:2.2,xp:20},
+  {id:'grape',    nm:'Üzüm',      em:'🍇',buy:60, sell:200,days:20,sea:['au'],    wd:2,col:0x6b2fa0,sh:1.6,xp:16},
+  {id:'pepper',   nm:'Biber',     em:'🌶️',buy:28, sell:90, days:12,sea:['su'],    wd:1,col:0xff3300,sh:0.9,xp:7},
+  {id:'lavender', nm:'Lavanta',   em:'💜',buy:50, sell:180,days:15,sea:['sp'],    wd:2,col:0xaa66dd,sh:1.3,xp:14},
+  {id:'mushroom', nm:'Mantar',    em:'🍄',buy:45, sell:160,days:9, sea:['au','wi'],wd:1,col:0xcc8844,sh:0.6,xp:13},
+];
+const FISH_LIST=[
+  {id:'sardine', nm:'Sardalya', em:'🐟',base:30,rarity:.45,xp:5},
+  {id:'trout',   nm:'Alabalık', em:'🐠',base:80,rarity:.30,xp:10},
+  {id:'carp',    nm:'Sazan',    em:'🐡',base:60,rarity:.15,xp:8},
+  {id:'bass',    nm:'Levrek',   em:'🎣',base:120,rarity:.07,xp:15},
+  {id:'tuna',    nm:'Ton Balığı',em:'🐋',base:300,rarity:.03,xp:30},
+];
+const SHOP=[
+  {id:'tractor',    nm:'Traktör',        em:'🚜',pr:2000,ds:'Manuel sürüş + otomatik görevler! WASD ile kontrol et.'},
+  {id:'plow_a',     nm:'Pulluk',         em:'🔧',pr:500, ds:'Tüm tarlayı otomatik çapalar.'},
+  {id:'seed_a',     nm:'Ekim Makinesi',  em:'🌱',pr:800, ds:'Seçili tohumu otomatik eker.'},
+  {id:'spray_a',    nm:'Sulama Aparatı', em:'💦',pr:600, ds:'Tüm tarlayı sular.'},
+  {id:'harvest_a',  nm:'Biçerdöver',     em:'⚙️',pr:1200,ds:'Olgun ürünleri toplar.'},
+  {id:'drip',       nm:'Damla Sulama',   em:'💧',pr:800, ds:'Her gün otomatik sular.'},
+  {id:'sprinkler',  nm:'Yağmurlama',     em:'🌧',pr:1500,ds:'Yağmurda su maliyeti yok.'},
+  {id:'greenhouse', nm:'Sera',           em:'🏡',pr:3000,ds:'Tüm ürünler her mevsimde büyür.'},
+  {id:'silo',       nm:'Silo',           em:'🏗',pr:1200,ds:'Envanter kapasitesi 2x artar.'},
+  {id:'fertilizer', nm:'Gübre ×5',       em:'🧪',pr:150, ds:'Hasat miktarını artırır.'},
+  {id:'fuel_can',   nm:'Yakıt ×50',      em:'⛽',pr:100, ds:'Traktör yakıtını doldurur.'},
+  {id:'barn',       nm:'Ahır',           em:'🐄',pr:2500,ds:'Hayvan yetiştirmeyi açar.'},
+  {id:'chicken',    nm:'Tavuk',          em:'🐔',pr:200, ds:'Her gün yumurta verir.'},
+  {id:'cow',        nm:'İnek',           em:'🐄',pr:500, ds:'Her gün süt verir.'},
+  {id:'bee_hive',   nm:'Arı Kovanı',     em:'🐝',pr:600, ds:'Her 3 günde bal üretir.'},
+  {id:'windmill',   nm:'Değirmen',       em:'⚙️',pr:1800,ds:'+30₺ pasif gelir/gün!'},
+  {id:'well',       nm:'Kuyu',           em:'🪣',pr:900, ds:'Yakın parselleri sular.'},
+  {id:'scarecrow',  nm:'Korkuluk',       em:'🎃',pr:300, ds:'Kötü havanın etkisini azaltır.'},
+  {id:'fishing_rod',nm:'Olta',           em:'🎣',pr:250, ds:'Balık tutmayı açar!'},
+  {id:'solar',      nm:'Güneş Paneli',   em:'🔆',pr:2200,ds:'Her gün +50₺ elektrik geliri.'},
+  {id:'compost',    nm:'Kompost',        em:'♻️',pr:400, ds:'Çöp bitkilerden gübre üretir.'},
+];
+const SEASONS=[
+  {nm:'İlkbahar',ic:'🌸',days:30,id:'sp',sky:0x7ec8f7,gnd:0x4fc955,fog:0x9ed8f9},
+  {nm:'Yaz',     ic:'☀️',days:30,id:'su',sky:0x4aa8ec,gnd:0x3bb83e,fog:0x6ec2f2},
+  {nm:'Sonbahar',ic:'🍂',days:30,id:'au',sky:0xe8a35c,gnd:0xa37d3a,fog:0xeeb878},
+  {nm:'Kış',     ic:'❄️',days:30,id:'wi',sky:0x9bb8d9,gnd:0xe8f0fa,fog:0xb8cfe8},
+];
+const WDEF={
+  sunny:{lb:'Güneşli', ic:'☀️',gm:1.0,aw:false},
+  cloudy:{lb:'Bulutlu', ic:'⛅',gm:1.0,aw:false},
+  rainy:{lb:'Yağmurlu',ic:'🌧',gm:1.2,aw:true},
+  hot:{lb:'Sıcak',     ic:'🌡',gm:1.3,aw:false},
+  windy:{lb:'Rüzgarlı',ic:'💨',gm:0.9,aw:false},
+  cold:{lb:'Soğuk',    ic:'🥶',gm:0.6,aw:false},
+  snowy:{lb:'Karlı',   ic:'❄️',gm:0.3,aw:true},
+  foggy:{lb:'Sisli',   ic:'🌫',gm:0.85,aw:false},
+};
+const SEA_W=[
+  ['sunny','cloudy','rainy','sunny','cloudy','sunny','rainy'],
+  ['sunny','sunny','hot','rainy','hot','sunny','hot'],
+  ['cloudy','rainy','windy','sunny','foggy','windy','rainy'],
+  ['cold','snowy','cold','cloudy','snowy','cold','foggy'],
+];
+const XP_TBL=[0,50,120,220,360,550,800,1100,1500,2000,2700,3500,4500,6000,8000,11000,15000];
+const MAX_LEVEL=300012;
+function xpFor(l){
+  l=Math.min(l,MAX_LEVEL);
+  if(l<XP_TBL.length)return XP_TBL[l];
+  const base=XP_TBL[XP_TBL.length-1];
+  const extra=l-(XP_TBL.length-1);
+  return Math.round(base+extra*1500+extra*extra*2.5);
+}
+function xpLv(xp){
+  if(xp<=0)return 1;
+  let l=1;
+  while(l<XP_TBL.length&&XP_TBL[l]<=xp)l++;
+  if(l<XP_TBL.length)return l-1;
+  let lo=XP_TBL.length-1,hi=MAX_LEVEL;
+  while(lo<hi){const mid=Math.ceil((lo+hi)/2);if(xpFor(mid)<=xp)lo=mid;else hi=mid-1;}
+  return Math.min(lo,MAX_LEVEL);
+}
+const QUEST_DEFS=[
+  {id:'q_h10',  ti:'İlk Hasat',     ds:'10 ürün hasat et',     goal:10,  stat:'harvests',reward:200, rxp:30},
+  {id:'q_h50',  ti:'Çiftçi',        ds:'50 ürün hasat et',     goal:50,  stat:'harvests',reward:500, rxp:80},
+  {id:'q_h200', ti:'Usta Çiftçi',   ds:'200 ürün hasat et',    goal:200, stat:'harvests',reward:1500,rxp:200},
+  {id:'q_g1k',  ti:'Zengin',        ds:'Toplam 1000₺ kazan',   goal:1000,stat:'earned',  reward:300, rxp:50},
+  {id:'q_g5k',  ti:'Toprak Ağası',  ds:'Toplam 5000₺ kazan',   goal:5000,stat:'earned',  reward:800, rxp:120},
+  {id:'q_d30',  ti:'Bir Ay',        ds:'30 gün yaşa',          goal:30,  stat:'day',     reward:400, rxp:60},
+  {id:'q_w100', ti:'Sucu',          ds:'100 kez sula',         goal:100, stat:'watered', reward:250, rxp:40},
+  {id:'q_f10',  ti:'Balıkçı',       ds:'10 balık tut',         goal:10,  stat:'fish',    reward:350, rxp:55},
+  {id:'q_f3',   ti:'Balıkçı Çırağı',ds:'3 balık tut',         goal:3,   stat:'fish',    reward:100, rxp:15},
+  {id:'q_d100', ti:'Efsane',        ds:'100 gün yaşa',         goal:100, stat:'day',     reward:2000,rxp:500},
+  {id:'q_drive',ti:'Sürücü',        ds:'Manuel sürüşle 50 hücre işle',goal:50,stat:'driven',reward:600,rxp:90},
+];
+const NEIGHBORS=[
+  {id:'ali',  nm:'Ali Bey',  em:'👴',trait:'trader',   msg:['Bugün buğday 2x fiyata!','Gübre satıyorum!','Harika hasat!'],gift:'fertilizer',
+   special:{id:'lucky_charm',nm:'Uğur Tılsımı',em:'🍀',pr:1200,ds:'Her hasatta %10 ek ürün şansı verir.'}},
+  {id:'zeyn', nm:'Zeynep',   em:'👩',trait:'helper',   msg:['Sulama sistemini yaptırdım.','Tavuklarım çok yumurta veriyor!','Merhaba komşu!'],gift:'seed_wheat',
+   special:{id:'golden_seed',nm:'Altın Tohum Çantası',em:'✨',pr:1500,ds:'Tüm hasatlardan +1 ekstra ürün (kalıcı).'}},
+  {id:'mst',  nm:'Mustafa',  em:'🧑',trait:'engineer', msg:['Traktörümü tamir ettim.','Değirmenimi gördin mi?','Rüzgar çok güçlü bugün.'],gift:'fuel',
+   special:{id:'eco_engine',nm:'Verimli Motor',em:'🔋',pr:1800,ds:'Traktör yakıt tüketimini %40 azaltır.'}},
+  {id:'fat',  nm:'Fatma Teyze',em:'👵',trait:'baker',  msg:['Taze ekmek pişirdim!','Pazar günü turta yapacağım.','Bal-süt karışımı çok lezzetli!'],gift:'fertilizer',
+   special:{id:'fast_oven',nm:'Hızlı Fırın',em:'🥖',pr:1000,ds:'Hayvan ürünleri satış fiyatı +%25 artar.'}},
+  {id:'kem',  nm:'Kemal',    em:'🧔',trait:'fisher',  msg:['Bugün gölde nadir balık gördüm!','Oltamı yeniledim.','Su seviyesi yüksek, balık bol olur.'],gift:'fuel',
+   special:{id:'pro_rod',nm:'Profesyonel Olta',em:'🎯',pr:1400,ds:'Balık tutma süresini kısaltır ve nadir balık şansını artırır.'}},
+  {id:'ayse', nm:'Ayşe',     em:'👧',trait:'gardener',msg:['Çiçeklerim açtı!','Komposttan harika gübre çıktı.','Bahçemde kelebekler var.'],gift:'seed_wheat',
+   special:{id:'green_thumb',nm:'Yeşil Parmak Eldiveni',em:'🧤',pr:1600,ds:'Sulanmamış bitkilerin solma riskini %50 azaltır.'}},
+];
+let mktMods={};
+function rollMkt(){mktMods={};CROPS.forEach(c=>{mktMods[c.id]=0.7+Math.random()*.8;});}
+function mktPrice(cropId){
+  const cr=CROPS.find(c=>c.id===cropId);
+  if(cr)return Math.round(cr.sell*(mktMods[cropId]||1));
+  const special={egg:25,milk:50,honey:80};
+  if(special[cropId]){const base=special[cropId];return S.owned.fast_oven?Math.round(base*1.25):base;}
+  const fish=FISH_LIST.find(f=>f.id===cropId);
+  if(fish)return fish.base;
+  return 30;
+}
+
+// ═══════════════════════════════════
+//  STATE
+// ═══════════════════════════════════
+const GW=10,GH=10;
+let S;
+function resetState(){
+  S={
+    gold:500,day:1,si:0,sd:1,weather:'sunny',
+    cells:Array(GW*GH).fill(null).map(()=>({st:'empty',crop:null,gr:0,wa:false,fe:false,ws:0})),
+    inv:{},owned:{},animals:[],fuel:100,
+    fertCnt:0,beeTmr:0,windTmr:0,solarTmr:0,compostTmr:0,
+    log:[],xp:0,lv:1,
+    stats:{harvests:0,earned:0,watered:0,fish:0,day:1,driven:0},
+    doneQ:[],nbrDay:{},mktWeek:0,
+    // Manuel sürüş durumu
+    driveMode:false,
+    driverPos:{x:0,z:0},
+    driverAngle:0,
+  };
+  rollMkt();
+}
+resetState();
+let tool='hoe',selCrop=null,sideTab='trk',logLines=[];
+function crp(id){return CROPS.find(c=>c.id===id);}
+function season(){return SEASONS[S.si];}
+function seaId(){return season().id;}
+function wd(){return WDEF[S.weather]||WDEF.sunny;}
+function canGrow(cid){if(S.owned.greenhouse)return true;const c=crp(cid);return c&&c.sea.includes(seaId());}
+function addLog(msg,tp=''){logLines.unshift({msg,tp,day:S.day});if(logLines.length>100)logLines.pop();S.log=logLines;if(sideTab==='log')renderSide();}
+function toast(msg,tp=''){
+  const el=document.getElementById('toast');el.textContent=msg;
+  el.style.color=tp==='good'?'#80ffe0':tp==='bad'?'#ff8888':tp==='warn'?'#ffdd44':tp==='gold'?'#f5c518':'var(--text)';
+  el.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('on'),2800);
+}
+
+// XP
+function addXP(n){
+  const old=xpLv(S.xp);S.xp+=n;const nw=Math.min(xpLv(S.xp),MAX_LEVEL);S.lv=nw;
+  updateXPBar();if(nw>old)showLvUp(nw);
+}
+function updateXPBar(){
+  const lv=xpLv(S.xp);
+  let pct;
+  if(lv>=MAX_LEVEL){pct=100;}else{const cur=xpFor(lv),nxt=xpFor(lv+1);pct=Math.min(100,((S.xp-cur)/(nxt-cur))*100);}
+  document.getElementById('xbmf').style.width=pct+'%';
+  document.getElementById('lbn').textContent=lv.toLocaleString('tr-TR');
+  document.getElementById('hlv').textContent=lv.toLocaleString('tr-TR');
+}
+function showLvUp(lv){
+  const pop=document.getElementById('lvpop');
+  document.getElementById('lvn').textContent=lv;
+  const rw={3:'+500₺ Ödül!',5:'Hız Bonusu!',7:'🌟 Özel Tohum!',10:'👑 Efsane Ünvanı!',15:'🌈 Mega Güç!'};
+  let rewardText=rw[lv]||'';let bonusGold=0;
+  if(rw[lv]){bonusGold=lv>=15?5000:lv>=10?2000:lv>=7?1000:lv>=5?700:500;}
+  if(!rw[lv]){
+    if(lv%1000===0){bonusGold=lv*15;rewardText=`🏆 MİLENYUM SEVİYE ${lv.toLocaleString('tr-TR')}!`;}
+    else if(lv%100===0){bonusGold=lv*8;rewardText=`💎 Yüzyıl Bonusu!`;}
+    else if(lv%50===0){bonusGold=lv*4;rewardText=`🎖 50'lik Ödül!`;}
+    else if(lv%25===0){bonusGold=lv*2;rewardText=`⭐ Çeyrek Yüzyıl!`;}
+    else if(lv%10===0){bonusGold=lv;rewardText=`🎁 +${bonusGold.toLocaleString('tr-TR')}₺`;}
+  }
+  if(bonusGold>0){rewardText+=` +${bonusGold.toLocaleString('tr-TR')}₺`;S.gold+=bonusGold;updateHUD();}
+  document.getElementById('lvr').textContent=rewardText;
+  pop.classList.add('on');addLog(`🌟 Seviye ${lv.toLocaleString('tr-TR')}!`,'good');
+  publishScore();
+}
+function closeLvPop(){document.getElementById('lvpop').classList.remove('on');}
+
+function checkQ(){
+  QUEST_DEFS.forEach(q=>{
+    if(S.doneQ.includes(q.id))return;
+    const val=q.stat==='day'?S.day:(S.stats[q.stat]||0);
+    if(val>=q.goal){
+      S.doneQ.push(q.id);S.gold+=q.reward;addXP(q.rxp);
+      toast(`🏆 ${q.ti}! +${q.reward}₺ +${q.rxp}XP`,'gold');
+      addLog(`🏆 Görev: ${q.ti} tamamlandı! +${q.reward}₺`,'good');updateHUD();
+    }
+  });
+  if(sideTab==='qst')renderSide();
+}
+
+// ═══════════════════════════════════
+//  THREE.JS SAHNE
+// ═══════════════════════════════════
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;
+
+const scene=new THREE.Scene();
+scene.fog=new THREE.FogExp2(0x9ed8f9,.0055);
+scene.background=new THREE.Color(0x7ec8f7);
+
+const camera=new THREE.PerspectiveCamera(52,1,.1,700);
+camera.position.set(0,34,42);camera.lookAt(0,0,0);
+
+const ambL=new THREE.AmbientLight(0xaaeebb,1.35);scene.add(ambL);
+const sunL=new THREE.DirectionalLight(0xfff6d8,3.0);
+sunL.position.set(28,65,22);sunL.castShadow=true;
+sunL.shadow.mapSize.set(2048,2048);
+sunL.shadow.camera.left=-60;sunL.shadow.camera.right=60;
+sunL.shadow.camera.top=60;sunL.shadow.camera.bottom=-60;
+sunL.shadow.bias=-.0008;sunL.shadow.normalBias=.02;scene.add(sunL);
+const fillL=new THREE.DirectionalLight(0xaad4ff,.7);fillL.position.set(-18,18,-12);scene.add(fillL);
+const bounceL=new THREE.DirectionalLight(0xffe6b8,.4);bounceL.position.set(0,-10,0);scene.add(bounceL);
+const hemiL=new THREE.HemisphereLight(0xbfe6ff,0x3a7d2c,.55);scene.add(hemiL);
+
+const gndMat=new THREE.MeshStandardMaterial({color:0x3db845,roughness:.85,metalness:0});
+const gnd=new THREE.Mesh(new THREE.PlaneGeometry(220,220),gndMat);
+gnd.rotation.x=-Math.PI/2;gnd.receiveShadow=true;scene.add(gnd);
+
+(function(){
+  const tuftGeo=new THREE.ConeGeometry(.05,.35,4);
+  const tuftMat=new THREE.MeshLambertMaterial({color:0x4fb054});
+  const tuftMesh=new THREE.InstancedMesh(tuftGeo,tuftMat,500);
+  const dummy=new THREE.Object3D();
+  for(let i=0;i<500;i++){
+    const ang=Math.random()*Math.PI*2,rad=18+Math.random()*85;
+    const x=Math.cos(ang)*rad,z=Math.sin(ang)*rad;
+    if(Math.abs(x)<14&&Math.abs(z)<14)continue;
+    dummy.position.set(x,.17,z);dummy.rotation.y=Math.random()*Math.PI;dummy.scale.setScalar(.7+Math.random()*.8);
+    dummy.updateMatrix();tuftMesh.setMatrixAt(i,dummy.matrix);
+  }
+  tuftMesh.instanceMatrix.needsUpdate=true;scene.add(tuftMesh);
+})();
+
+[[4,50,-34,0],[4,50,0,Math.PI/2]].forEach(([w,l,x,ry])=>{
+  const p=new THREE.Mesh(new THREE.PlaneGeometry(w,l),new THREE.MeshLambertMaterial({color:0xc8a060}));
+  p.rotation.x=-Math.PI/2;p.rotation.z=ry;p.position.set(x,.01,0);scene.add(p);
+});
+
+const skyDome=new THREE.Mesh(new THREE.SphereGeometry(290,20,12),new THREE.MeshBasicMaterial({color:0x5bb8f5,side:THREE.BackSide,fog:false}));
+scene.add(skyDome);
+const skyDomeLow=new THREE.Mesh(new THREE.SphereGeometry(288,20,12,0,Math.PI*2,Math.PI*0.45,Math.PI*0.55),
+  new THREE.MeshBasicMaterial({color:0xeaf6ff,side:THREE.BackSide,transparent:true,opacity:.55,fog:false}));
+scene.add(skyDomeLow);
+
+const sunSph=new THREE.Mesh(new THREE.SphereGeometry(4.2,20,16),new THREE.MeshBasicMaterial({color:0xfff2a0,fog:false}));
+sunSph.position.set(60,90,-45);scene.add(sunSph);
+const sunHalo=new THREE.Mesh(new THREE.CircleGeometry(9,24),new THREE.MeshBasicMaterial({color:0xffee44,transparent:true,opacity:.16,side:THREE.DoubleSide,fog:false}));
+sunHalo.position.copy(sunSph.position);scene.add(sunHalo);
+const sunHalo2=new THREE.Mesh(new THREE.CircleGeometry(15,24),new THREE.MeshBasicMaterial({color:0xffee44,transparent:true,opacity:.06,side:THREE.DoubleSide,fog:false}));
+sunHalo2.position.copy(sunSph.position);scene.add(sunHalo2);
+
+const moonSph=new THREE.Mesh(new THREE.SphereGeometry(2.8,16,12),new THREE.MeshBasicMaterial({color:0xeaf2ff,fog:false}));
+moonSph.position.set(-60,85,-45);moonSph.visible=false;scene.add(moonSph);
+const moonHalo=new THREE.Mesh(new THREE.CircleGeometry(6,20),new THREE.MeshBasicMaterial({color:0xccddff,transparent:true,opacity:.1,side:THREE.DoubleSide,fog:false}));
+moonHalo.position.copy(moonSph.position);moonHalo.visible=false;scene.add(moonHalo);
+
+const starGeo=new THREE.BufferGeometry();
+const sv=[];for(let i=0;i<4000;i++){const t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1),r=270;sv.push(r*Math.sin(p)*Math.cos(t),r*Math.cos(p),r*Math.sin(p)*Math.sin(t));}
+starGeo.setAttribute('position',new THREE.Float32BufferAttribute(sv,3));
+const starsObj=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:.55,sizeAttenuation:false}));
+starsObj.visible=false;scene.add(starsObj);
+
+function mkCloud(x,y,z,sc=1){
+  const g=new THREE.Group();
+  const topM=new THREE.MeshLambertMaterial({color:0xffffff});
+  const botM=new THREE.MeshLambertMaterial({color:0xe4eef7});
+  [[0,0,0,3,1.2,2,topM],[2.2,.4,0,2,.9,1.5,topM],[-2.2,.3,0,2.3,1,1.4,topM],[.8,.5,.7,1.5,.8,1.2,topM],[-1,.6,-.5,1.3,.7,1,topM],
+   [0,-.45,0,3.2,.7,2.1,botM],[2.2,-.25,0,2.1,.55,1.5,botM],[-2.2,-.3,0,2.4,.6,1.4,botM]].forEach(([cx,cy,cz,rw,rh,rd,mat])=>{
+    const s=new THREE.Mesh(new THREE.SphereGeometry(1,10,8),mat);
+    s.scale.set(rw*sc,rh*sc,rd*sc);s.position.set(cx*sc,cy*sc,cz*sc);g.add(s);
+  });
+  g.position.set(x,y,z);return g;
+}
+[[-38,32,-28,1.3],[14,36,-20,1],[48,30,-32,.9],[-20,34,14,1.1],[32,38,10,.85],[-52,28,-8,1.2],[6,40,-42,.7],[22,35,35,1.1],[-30,31,30,.9]].forEach(([x,y,z,s])=>scene.add(mkCloud(x,y,z,s)));
+
+const rainGeo=new THREE.BufferGeometry();
+const rv=new Float32Array(800*3);for(let i=0;i<800;i++){rv[i*3]=(Math.random()-.5)*60;rv[i*3+1]=Math.random()*35;rv[i*3+2]=(Math.random()-.5)*60;}
+rainGeo.setAttribute('position',new THREE.Float32BufferAttribute(rv,3));
+const rainObj=new THREE.Points(rainGeo,new THREE.PointsMaterial({color:0x88aaff,size:.08,transparent:true,opacity:.6}));
+rainObj.visible=false;scene.add(rainObj);
+
+const snowGeo=new THREE.BufferGeometry();
+const snv=new Float32Array(600*3);for(let i=0;i<600;i++){snv[i*3]=(Math.random()-.5)*60;snv[i*3+1]=Math.random()*32;snv[i*3+2]=(Math.random()-.5)*60;}
+snowGeo.setAttribute('position',new THREE.Float32BufferAttribute(snv,3));
+const snowObj=new THREE.Points(snowGeo,new THREE.PointsMaterial({color:0xffffff,size:.18,transparent:true,opacity:.8}));
+snowObj.visible=false;scene.add(snowObj);
+
+function mkTree(x,z,h=4,type=0){
+  const g=new THREE.Group(),tm=new THREE.MeshStandardMaterial({color:0x6b3f0f,roughness:.9});
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.15,.22,h*.42,7),tm);
+  trunk.position.y=h*.21;trunk.castShadow=true;g.add(trunk);
+  if(type===1){
+    const cone=new THREE.Mesh(new THREE.ConeGeometry(h*.27,h*.72,8),new THREE.MeshStandardMaterial({color:0x1a5c1a,roughness:.85}));
+    cone.position.y=h*.62;cone.castShadow=true;g.add(cone);
+    const c2=new THREE.Mesh(new THREE.ConeGeometry(h*.19,h*.52,8),new THREE.MeshStandardMaterial({color:0x267326,roughness:.85}));
+    c2.position.y=h*.88;c2.castShadow=true;g.add(c2);
+  }else{
+    [[0,h*.57,h*.32],[.22*h,h*.47,.1*h],[-.16*h,h*.52,-.1*h]].forEach(([px,py,pz],i)=>{
+      const lc=[0x2d7a2d,0x359e35,0x1e6b1e][i%3];
+      const s=new THREE.Mesh(new THREE.SphereGeometry(h*(.28+i*.04),10,8),new THREE.MeshStandardMaterial({color:lc,roughness:.85}));
+      s.position.set(px,py,pz);s.castShadow=true;g.add(s);
+    });
+  }
+  g.position.set(x,0,z);return g;
+}
+var treePositions=[[-27,-23],[-29,-15],[-27,-7],[-28,3],[-29,11],[-27,19],[-28,27],[27,-23],[28,-15],[27,-7],[28,3],[27,11],[28,19],[27,27],[0,-32],[11,-32],[-11,-32],[6,-32],[-6,-32],[0,32],[11,32],[-11,32],[16,32],[-16,32]];
+for(var ti=0;ti<treePositions.length;ti++){
+  var tx=treePositions[ti][0],tz=treePositions[ti][1];
+  scene.add(mkTree(tx,tz,3+Math.random()*2.5,ti%3===0?1:0));
+}
+
+[[82,-82,24,0x8a9a9a],[112,-62,19,0x7a8a8a],[-82,-82,26,0x8a9a9a],[-102,-62,21,0x7a8a8a],[0,-105,32,0x9aaaaa],[60,-95,18,0x8a9a9a]].forEach(function(m){
+  var x=m[0],z=m[1],h=m[2],c=m[3];
+  var mesh=new THREE.Mesh(new THREE.ConeGeometry(h*.62,h,8),new THREE.MeshStandardMaterial({color:c,roughness:.9}));
+  mesh.position.set(x,0,z);mesh.castShadow=true;scene.add(mesh);
+  var sn=new THREE.Mesh(new THREE.ConeGeometry(h*.16,h*.32,8),new THREE.MeshStandardMaterial({color:0xffffff,roughness:.6}));
+  sn.position.set(x,h*.82,z);scene.add(sn);
+});
+
+(function(){
+  var lk=new THREE.Mesh(new THREE.CircleGeometry(9,32),new THREE.MeshPhongMaterial({color:0x2a8fd4,transparent:true,opacity:.85,shininess:180,specular:0xddeeff}));
+  lk.rotation.x=-Math.PI/2;lk.position.set(36,0.02,30);scene.add(lk);
+  var shore=new THREE.Mesh(new THREE.RingGeometry(9,10.5,32),new THREE.MeshStandardMaterial({color:0xd6b878,roughness:.85}));
+  shore.rotation.x=-Math.PI/2;shore.position.set(36,.01,30);scene.add(shore);
+  for(var r=0;r<3;r++){
+    var ring=new THREE.Mesh(new THREE.RingGeometry(2+r*2.5,2.15+r*2.5,32),new THREE.MeshBasicMaterial({color:0x88ccee,transparent:true,opacity:.18,side:THREE.DoubleSide}));
+    ring.rotation.x=-Math.PI/2;ring.position.set(36,.03,30);scene.add(ring);
+  }
+})();
+
+var fMat=new THREE.MeshLambertMaterial({color:0xc8944a});
+function mkFence(x,z,ry){
+  var g=new THREE.Group();
+  [-1,1].forEach(function(ox){var p=new THREE.Mesh(new THREE.BoxGeometry(.14,1,.14),fMat);p.position.set(ox*.9,.5,0);g.add(p);});
+  var r=new THREE.Mesh(new THREE.BoxGeometry(2,.07,.07),fMat);r.position.y=.78;g.add(r);
+  var r2=r.clone();r2.position.y=.44;g.add(r2);
+  g.position.set(x,0,z);g.rotation.y=ry;return g;
+}
+var FOX=-((GW-1)*2.5)/2,FOZ=-((GH-1)*2.5)/2;
+for(var fi=0;fi<GW;fi++){scene.add(mkFence(FOX+fi*2.5-1.25,FOZ-2.5,0));scene.add(mkFence(FOX+fi*2.5-1.25,FOZ+(GH-1)*2.5+1.25,0));}
+for(var fj=0;fj<GH;fj++){scene.add(mkFence(FOX-2.5,FOZ+fj*2.5-1.25,Math.PI/2));scene.add(mkFence(FOX+(GW-1)*2.5+1.25,FOZ+fj*2.5-1.25,Math.PI/2));}
+
+(function(){
+  const g=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.BoxGeometry(9,5.8,6.5),new THREE.MeshStandardMaterial({color:0xd6280f,roughness:.7}));
+  body.position.y=2.9;body.castShadow=true;body.receiveShadow=true;g.add(body);
+  const roof=new THREE.Mesh(new THREE.ConeGeometry(6,3.8,4),new THREE.MeshStandardMaterial({color:0x7a1500,roughness:.75}));
+  roof.position.y=7.6;roof.rotation.y=Math.PI/4;roof.castShadow=true;g.add(roof);
+  const door=new THREE.Mesh(new THREE.BoxGeometry(2.2,3.2,.12),new THREE.MeshStandardMaterial({color:0x7b4a1e,roughness:.8}));
+  door.position.set(0,1.6,3.26);g.add(door);
+  const trim=new THREE.Mesh(new THREE.BoxGeometry(9.2,.15,6.7),new THREE.MeshStandardMaterial({color:0xffffff,roughness:.6}));
+  trim.position.y=5.8;g.add(trim);
+  g.position.set(-38,0,0);scene.add(g);
+})();
+
+(function(){
+  const g=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.CylinderGeometry(2,2,8,18),new THREE.MeshStandardMaterial({color:0xc9d4dd,roughness:.4,metalness:.35}));
+  body.position.y=4;body.castShadow=true;g.add(body);
+  const cap=new THREE.Mesh(new THREE.ConeGeometry(2.2,2.2,18),new THREE.MeshStandardMaterial({color:0x95a8bd,roughness:.4,metalness:.4}));
+  cap.position.y=9.1;cap.castShadow=true;g.add(cap);
+  for(let i=0;i<5;i++){const band=new THREE.Mesh(new THREE.CylinderGeometry(2.05,2.05,.08,18),new THREE.MeshStandardMaterial({color:0xa8bdd2,roughness:.35,metalness:.4}));band.position.y=.5+i*1.5;g.add(band);}
+  g.position.set(-34,0,12);scene.add(g);
+})();
+
+(function(){
+  const g=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.BoxGeometry(7,4.5,6),new THREE.MeshStandardMaterial({color:0xf7e4b8,roughness:.75}));
+  body.position.y=2.25;body.castShadow=true;body.receiveShadow=true;g.add(body);
+  const roof=new THREE.Mesh(new THREE.ConeGeometry(5.2,3,4),new THREE.MeshStandardMaterial({color:0x9c3815,roughness:.7}));
+  roof.position.y=6;roof.rotation.y=Math.PI/4;roof.castShadow=true;g.add(roof);
+  const door=new THREE.Mesh(new THREE.BoxGeometry(1.2,2.4,.1),new THREE.MeshStandardMaterial({color:0x6b3f0f,roughness:.8}));
+  door.position.set(0,1.2,3.05);g.add(door);
+  const chimney=new THREE.Mesh(new THREE.BoxGeometry(.45,.45,1.2),new THREE.MeshStandardMaterial({color:0xa8665a,roughness:.8}));
+  chimney.position.set(2,7,.5);g.add(chimney);
+  g.position.set(-38,0,14);scene.add(g);
+})();
+
+const windmillG=new THREE.Group();
+(function(){
+  const post=new THREE.Mesh(new THREE.CylinderGeometry(.28,.38,9,8),new THREE.MeshLambertMaterial({color:0xeeeebb}));
+  post.position.y=4.5;windmillG.add(post);
+  const hub=new THREE.Mesh(new THREE.SphereGeometry(.45,8,8),new THREE.MeshLambertMaterial({color:0xddcc77}));
+  hub.position.y=9.5;windmillG.add(hub);
+  const bgrp=new THREE.Group();
+  for(let i=0;i<4;i++){
+    const b=new THREE.Mesh(new THREE.BoxGeometry(.32,2.8,.09),new THREE.MeshLambertMaterial({color:0xffeeaa}));
+    b.position.y=1.4;const bg=new THREE.Group();bg.add(b);bg.rotation.z=i*Math.PI/2;bgrp.add(bg);
+  }
+  bgrp.position.y=9.5;windmillG.add(bgrp);
+  windmillG.userData.blades=bgrp;
+  windmillG.position.set(32,0,-32);
+  scene.add(windmillG);
+})();
+
+const solarG=new THREE.Group();
+(function(){
+  for(let i=0;i<4;i++){
+    const panel=new THREE.Mesh(new THREE.BoxGeometry(2.5,1.5,.08),new THREE.MeshPhongMaterial({color:0x1a3a6b,specular:0x4488cc,shininess:150}));
+    panel.position.set(i*2.8-4.2,.02,0);panel.rotation.x=-.35;solarG.add(panel);
+  }
+  solarG.position.set(32,0,32);solarG.visible=false;scene.add(solarG);
+})();
+
+// ═══════════════════════════════════
+//  FARM CELLS
+// ═══════════════════════════════════
+const cMeshes=[],pMeshes=[],hlMeshes=[];
+function cellPos(idx){const col=idx%GW,row=Math.floor(idx/GW);return{x:FOX+col*2.5,z:FOZ+row*2.5};}
+
+function buildCells(){
+  for(let i=0;i<GW*GH;i++){
+    const {x,z}=cellPos(i);
+    const m=new THREE.Mesh(new THREE.BoxGeometry(2.28,.28,2.28),new THREE.MeshStandardMaterial({color:0x6b3f0f,roughness:.95}));
+    m.position.set(x,.14,z);m.receiveShadow=true;m.castShadow=true;m.userData.ci=i;
+    scene.add(m);cMeshes.push(m);
+    const h=new THREE.Mesh(new THREE.BoxGeometry(2.4,.06,2.4),new THREE.MeshBasicMaterial({color:0x44ff88,transparent:true,opacity:0,fog:false}));
+    h.position.set(x,.3,z);scene.add(h);hlMeshes.push(h);
+    pMeshes.push(null);
+  }
+}
+buildCells();
+
+function upCellCol(i){
+  const c=S.cells[i],m=cMeshes[i];if(!m)return;
+  let col=0x6b3f0f;
+  if(c.st==='tilled')col=0x3d1f08;
+  if(c.st==='planted')col=c.wa?0x2a5510:0x3a1e08;
+  if(c.st==='ready')col=0x1a7a28;
+  m.material.color.setHex(col);
+}
+
+function buildPlant(ci){
+  if(pMeshes[ci]){scene.remove(pMeshes[ci]);pMeshes[ci]=null;}
+  const c=S.cells[ci];if(c.st!=='planted'&&c.st!=='ready')return;
+  const cr=crp(c.crop);if(!cr)return;
+  const pct=Math.min(c.gr/cr.days,1);
+  const {x,z}=cellPos(ci);
+  const g=new THREE.Group();
+
+  if(pct<0.18){
+    const sh=0.35+pct*1.6;
+    for(let s=0;s<4;s++){
+      const ox=(Math.random()-.5)*.75,oz=(Math.random()-.5)*.75;
+      const seed=new THREE.Mesh(new THREE.ConeGeometry(.09,sh,6),new THREE.MeshStandardMaterial({color:0x6fcf5a,roughness:.7}));
+      seed.position.set(ox,sh/2,oz);seed.castShadow=true;g.add(seed);
+      const tip=new THREE.Mesh(new THREE.SphereGeometry(.045,6,6),new THREE.MeshStandardMaterial({color:0x8fe06a,roughness:.6}));
+      tip.position.set(ox,sh,oz);g.add(tip);
+    }
+    if(c.fe){const sp=new THREE.Mesh(new THREE.SphereGeometry(.09,6,6),new THREE.MeshBasicMaterial({color:0xaaff44}));sp.position.set(.4,.5,.4);g.add(sp);}
+    g.position.set(x,.3,z);scene.add(g);pMeshes[ci]=g;return;
+  }
+
+  if(cr.id==='apple'||cr.id==='grape'){
+    const h=.7+pct*2.6;
+    const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.09,.13,h*.46,7),new THREE.MeshStandardMaterial({color:cr.id==='grape'?0x5a2f0a:0x6b3f0f,roughness:.9}));
+    trunk.position.y=h*.23;trunk.castShadow=true;g.add(trunk);
+    const top=new THREE.Mesh(new THREE.SphereGeometry(h*.44,10,8),new THREE.MeshStandardMaterial({color:cr.id==='grape'?0x267a26:0x2d7a2d,roughness:.85}));
+    top.position.y=h*.67;top.castShadow=true;g.add(top);
+    if(c.st==='ready'){
+      const fc=cr.id==='grape'?8:5;
+      for(let a=0;a<fc;a++){const ang=a*Math.PI*2/fc;const fr=new THREE.Mesh(new THREE.SphereGeometry(cr.id==='grape'?.1:.14,8,6),new THREE.MeshStandardMaterial({color:cr.col,roughness:.4}));fr.position.set(Math.cos(ang)*h*.34,h*.59+Math.sin(a)*.1,Math.sin(ang)*h*.34);g.add(fr);}
+    }
+  }else if(cr.id==='lavender'){
+    const h=.2+pct*cr.sh;
+    for(let s=0;s<6;s++){
+      const ox=(Math.random()-.5)*.8,oz=(Math.random()-.5)*.8;
+      const stem=new THREE.Mesh(new THREE.CylinderGeometry(.03,.04,h*.8,5),new THREE.MeshStandardMaterial({color:0x6aaa44,roughness:.85}));
+      stem.position.set(ox,h*.4,oz);g.add(stem);
+      if(pct>.4){const tip=new THREE.Mesh(new THREE.CylinderGeometry(.04,.02,h*.3,6),new THREE.MeshStandardMaterial({color:cr.col,roughness:.6}));tip.position.set(ox,h*.85,oz);g.add(tip);}
+    }
+  }else{
+    const stalks=cr.id==='wheat'||cr.id==='rice'||cr.id==='corn'?5:cr.id==='bean'||cr.id==='pepper'||cr.id==='mushroom'?3:1;
+    for(let s=0;s<stalks;s++){
+      const ox=stalks>1?(Math.random()-.5)*.88:0,oz=stalks>1?(Math.random()-.5)*.88:0;
+      const h=.2+pct*cr.sh;
+      const sc=pct<.4?0x55aa33:pct<.75?0x6dc040:0x85c850;
+      if(cr.id!=='mushroom'){
+        const stem=new THREE.Mesh(new THREE.CylinderGeometry(.03,.06,h,5),new THREE.MeshStandardMaterial({color:sc,roughness:.85}));
+        stem.position.set(ox,h/2,oz);stem.castShadow=true;g.add(stem);
+      }
+      if(c.st==='ready'||pct>.55){
+        const sz=cr.id==='mushroom'?.22+pct*.1:.12+pct*.1;
+        if(cr.id==='mushroom'){
+          const cap=new THREE.Mesh(new THREE.SphereGeometry(sz*1.4,8,6),new THREE.MeshStandardMaterial({color:cr.col,roughness:.6}));
+          cap.scale.y=.55;cap.position.set(ox,h*.85,oz);g.add(cap);
+          const stem2=new THREE.Mesh(new THREE.CylinderGeometry(.05,.07,h*.6,6),new THREE.MeshStandardMaterial({color:0xddccaa,roughness:.8}));
+          stem2.position.set(ox,h*.3,oz);g.add(stem2);
+        }else{
+          const head=new THREE.Mesh(new THREE.SphereGeometry(sz,10,8),new THREE.MeshStandardMaterial({color:cr.col,roughness:.5}));
+          head.position.set(ox,h,oz);head.castShadow=true;g.add(head);
+          if(cr.id==='sunflower'){const disc=new THREE.Mesh(new THREE.CylinderGeometry(.24,.24,.1,12),new THREE.MeshStandardMaterial({color:0x5c3d0a,roughness:.8}));disc.position.set(ox,h+.07,oz);g.add(disc);}
+          if(cr.id==='pumpkin'){const p2=new THREE.Mesh(new THREE.SphereGeometry(sz*.85,10,8),new THREE.MeshStandardMaterial({color:0xff8800,roughness:.55}));p2.position.set(ox+.22,h*.7,oz);g.add(p2);}
+        }
+      }
+    }
+  }
+  if(c.fe){const sp=new THREE.Mesh(new THREE.SphereGeometry(.08,4,4),new THREE.MeshBasicMaterial({color:0xaaff44}));sp.position.set(.35,pct*cr.sh+.45,.35);g.add(sp);}
+  if(c.wa&&pct<.9){const wdp=new THREE.Mesh(new THREE.SphereGeometry(.06,4,4),new THREE.MeshBasicMaterial({color:0x44aaff,transparent:true,opacity:.7}));wdp.position.set(-.3,.18,-.3);g.add(wdp);}
+  if(c.st==='ready'){const star=new THREE.Mesh(new THREE.SphereGeometry(.2,6,6),new THREE.MeshBasicMaterial({color:0xffee00}));star.position.set(0,cr.sh+.9,0);g.add(star);}
+  g.position.set(x,.3,z);scene.add(g);pMeshes[ci]=g;
+}
+
+function refCell(i){upCellCol(i);buildPlant(i);}
+
+// ═══════════════════════════════════
+//  TRAKTÖR (ORTAK 3D MODEL)
+// ═══════════════════════════════════
+const trG=new THREE.Group();scene.add(trG);trG.visible=false;trG.position.set(-22,0,0);
+
+function buildTractor(){
+  trG.clear();
+  const bm=new THREE.MeshPhongMaterial({color:0x1a9944,specular:0x66cc66,shininess:120});
+  const body=new THREE.Mesh(new THREE.BoxGeometry(1.8,.95,3),bm);body.position.y=1.12;body.castShadow=true;trG.add(body);
+  const hood=new THREE.Mesh(new THREE.BoxGeometry(1.6,.65,1.15),bm);hood.position.set(0,1.22,1.4);trG.add(hood);
+  const cab=new THREE.Mesh(new THREE.BoxGeometry(1.6,.78,1.45),new THREE.MeshPhongMaterial({color:0x147733,specular:0x44aa44,shininess:80}));
+  cab.position.set(0,1.78,-.14);trG.add(cab);
+  const gm=new THREE.MeshPhongMaterial({color:0x88ccff,transparent:true,opacity:.6,shininess:250,specular:0xffffff});
+  [[1.6,.78,.06,0,1.78,.54],[.06,.78,1.45,.82,1.78,-.14],[.06,.78,1.45,-.82,1.78,-.14]].forEach(([w,h,d,x,y,z])=>{
+    const gl=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),gm);gl.position.set(x,y,z);trG.add(gl);
+  });
+  const exh=new THREE.Mesh(new THREE.CylinderGeometry(.09,.12,.95,8),new THREE.MeshLambertMaterial({color:0x333333}));
+  exh.position.set(.6,1.88,1.08);trG.add(exh);
+  const hlm=new THREE.MeshBasicMaterial({color:0xffffaa});
+  [-.54,.54].forEach(ox=>{const hl=new THREE.Mesh(new THREE.BoxGeometry(.25,.17,.09),hlm);hl.position.set(ox,1.14,1.95);trG.add(hl);});
+  const wm=new THREE.MeshPhongMaterial({color:0x111111,specular:0x222222,shininess:20});
+  const rm=new THREE.MeshPhongMaterial({color:0xdddd44,specular:0xffffff,shininess:180});
+  trG.wheelMs=[];
+  [[-.95,.54,1.07,.5],[.95,.54,1.07,.5],[-1,.8,-1.08,.74],[1,.8,-1.08,.74]].forEach(([px,py,pz,rx])=>{
+    const wg=new THREE.Group();
+    const w=new THREE.Mesh(new THREE.CylinderGeometry(rx,rx,.32,14),wm);w.rotation.z=Math.PI/2;
+    const rim=new THREE.Mesh(new THREE.CylinderGeometry(rx*.56,rx*.56,.34,10),rm);rim.rotation.z=Math.PI/2;
+    wg.add(w);wg.add(rim);wg.position.set(px,py,pz);trG.add(wg);trG.wheelMs.push(wg);
+  });
+  trG.ap=new THREE.Object3D();trG.ap.position.set(0,.5,-1.65);trG.add(trG.ap);trG.curAtt=null;
+}
+function setAtt(type){
+  if(trG.curAtt){trG.ap.remove(trG.curAtt);trG.curAtt=null;}
+  if(!type)return;
+  const g=new THREE.Group();
+  const sv=new THREE.MeshPhongMaterial({color:0xaaaaaa,specular:0xffffff,shininess:200});
+  if(type==='plow_a'){
+    const bar=new THREE.Mesh(new THREE.BoxGeometry(2.3,.1,.1),new THREE.MeshLambertMaterial({color:0x555555}));g.add(bar);
+    for(let i=-2;i<=2;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(.07,.58,.68),sv);b.position.set(i*.5,-.3,-.1);b.rotation.x=.18;g.add(b);}
+  }else if(type==='seed_a'){
+    const box=new THREE.Mesh(new THREE.BoxGeometry(2,.58,.58),new THREE.MeshLambertMaterial({color:0xee6600}));g.add(box);
+    for(let i=-2;i<=2;i++){const t=new THREE.Mesh(new THREE.CylinderGeometry(.048,.048,.48,6),new THREE.MeshLambertMaterial({color:0x333333}));t.position.set(i*.44,-.33,0);t.rotation.x=Math.PI/2;g.add(t);}
+  }else if(type==='spray_a'){
+    const tank=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.68,8),new THREE.MeshLambertMaterial({color:0x2266cc}));tank.rotation.z=Math.PI/2;g.add(tank);
+    const boom=new THREE.Mesh(new THREE.BoxGeometry(3.3,.07,.07),new THREE.MeshLambertMaterial({color:0x1a4499}));g.add(boom);
+    for(let i=-3;i<=3;i++){const n=new THREE.Mesh(new THREE.CylinderGeometry(.038,.058,.24,6),new THREE.MeshLambertMaterial({color:0x88ccff}));n.position.set(i*.52,-.07,0);g.add(n);}
+  }else if(type==='harvest_a'){
+    const h=new THREE.Mesh(new THREE.BoxGeometry(2.7,.34,.95),new THREE.MeshPhongMaterial({color:0xdd2200,specular:0xff6644,shininess:80}));g.add(h);
+    for(let i=-3;i<=3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(.07,.42,.07),sv);b.position.set(i*.4,.05,-.42);b.rotation.z=.15*i;g.add(b);}
+  }
+  trG.ap.add(g);trG.curAtt=g;
+}
+buildTractor();
+
+const exPts=[];for(let i=0;i<28;i++)exPts.push({x:0,y:0,vx:(Math.random()-.5)*.06,vy:.09+Math.random()*.07,age:Math.random()});
+const exGeo=new THREE.BufferGeometry();
+const exArr=new Float32Array(28*3);
+exGeo.setAttribute('position',new THREE.Float32BufferAttribute(exArr,3));
+const exMesh=new THREE.Points(exGeo,new THREE.PointsMaterial({color:0x999999,size:.14,transparent:true,opacity:.42}));
+scene.add(exMesh);
+
+function upExhaust(){
+  if(!trG.visible){exMesh.visible=false;return;}
+  exMesh.visible=true;
+  const wp=new THREE.Vector3();trG.getWorldPosition(wp);
+  exPts.forEach((p,i)=>{
+    p.age+=.044;if(p.age>1){p.age=0;p.x=0;p.y=0;p.vx=(Math.random()-.5)*.05;p.vy=.08+Math.random()*.06;}
+    p.x+=p.vx;p.y+=p.vy;
+    exArr[i*3]=wp.x+p.x;exArr[i*3+1]=wp.y+2.82+p.y;exArr[i*3+2]=wp.z+p.x*.5;
+  });
+  exGeo.attributes.position.needsUpdate=true;
+}
+
+// ═══════════════════════════════════
+//  OTOMATİK GÖREV SİSTEMİ (eski sıra bazlı)
+// ═══════════════════════════════════
+let tRunning=false,tQueue=[],tPos={x:-22,z:0},tTarget={x:-22,z:0};
+let tAction=null,tSpeed=4.8,tWR=0;
+
+function runTask(type){
+  if(!S.owned.tractor){toast('Traktör satın al!','bad');return;}
+  if(S.fuel<=0){toast('Yakıt bitti! ⛽','bad');return;}
+  if(tRunning){toast('Traktör çalışıyor!','warn');return;}
+  if(S.driveMode){toast('Önce Manuel Sürüşü kapat!','warn');return;}
+  const needsA={till:'plow_a',seed:'seed_a',spray:'spray_a',harvest:'harvest_a'}[type];
+  if(needsA&&!S.owned[needsA]){toast(`${SHOP.find(i=>i.id===needsA)?.nm} aparatı gerek!`,'bad');return;}
+  setAtt(needsA||null);
+  tQueue=[];
+  for(let i=0;i<GW*GH;i++){
+    const c=S.cells[i];let ok=false;
+    if(type==='till'&&c.st==='empty')ok=true;
+    if(type==='spray'&&c.st==='planted'&&!c.wa)ok=true;
+    if(type==='harvest'&&c.st==='ready')ok=true;
+    if(type==='seed'&&c.st==='tilled'&&selCrop)ok=true;
+    if(type==='fertilize'&&c.st==='planted'&&!c.fe&&S.fertCnt>0)ok=true;
+    if(ok)tQueue.push({i,type});
+  }
+  if(!tQueue.length){toast('Yapılacak iş yok!','warn');return;}
+  tRunning=true;trG.visible=true;
+  document.getElementById('tov').classList.add('go');
+  addLog(`🚜 Traktör otomatik görevi: ${type}`,'good');
+  procQueue();
+}
+
+function procQueue(){
+  if(!tQueue.length||S.fuel<=0){finishTractor();return;}
+  const task=tQueue.shift();const {x,z}=cellPos(task.i);
+  tTarget={x,z};
+  tAction=()=>{doTrWork(task.i,task.type);const fuelCost=S.owned.eco_engine?0.9:1.5;S.fuel=Math.max(0,S.fuel-fuelCost);updateHUD();if(sideTab==='trk')renderSide();setTimeout(procQueue,230);};
+}
+
+function doTrWork(i,type){
+  const c=S.cells[i];
+  if(type==='till'&&c.st==='empty'){c.st='tilled';spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'dirt');refCell(i);}
+  else if(type==='spray'&&c.st==='planted'){c.wa=true;c.ws=(c.ws||0)+1;S.stats.watered++;spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'water');refCell(i);}
+  else if(type==='harvest'&&c.st==='ready'){spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'money');harvestCell(i);}
+  else if(type==='seed'&&c.st==='tilled'&&selCrop){
+    const cr=crp(selCrop);
+    if(S.gold>=cr.buy&&canGrow(selCrop)){S.gold-=cr.buy;c.st='planted';c.crop=selCrop;c.gr=0;c.wa=false;c.fe=false;c.ws=0;spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'leaf');refCell(i);updateHUD();}
+  }else if(type==='fertilize'&&c.st==='planted'&&!c.fe&&S.fertCnt>0){c.fe=true;S.fertCnt--;spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'bubble');refCell(i);}
+  hlMeshes[i].material.opacity=.9;setTimeout(()=>hlMeshes[i].material.opacity=0,450);
+}
+
+function finishTractor(){
+  tRunning=false;setAtt(null);
+  document.getElementById('tov').classList.remove('go');
+  tTarget={x:-22,z:0};tAction=()=>{if(!S.driveMode)trG.visible=false;};
+  addLog('🚜 Otomatik görev bitti!','good');toast('🚜 Görev tamam!','good');
+  updateHUD();renderSide();
+}
+
+function upTractor(dt){
+  if(!trG.visible)return;
+  // Otomatik görev hareketi (driveMode yoksa)
+  if(!S.driveMode&&(tRunning||tAction)){
+    const dx=tTarget.x-tPos.x,dz=tTarget.z-tPos.z,dist=Math.sqrt(dx*dx+dz*dz);
+    if(dist>.12){
+      const spd=Math.min(tSpeed*dt,dist);tPos.x+=dx/dist*spd;tPos.z+=dz/dist*spd;
+      trG.position.set(tPos.x,0,tPos.z);
+      const ta=Math.atan2(dx,dz);let da=ta-trG.rotation.y;
+      while(da>Math.PI)da-=Math.PI*2;while(da<-Math.PI)da+=Math.PI*2;
+      trG.rotation.y+=da*Math.min(1,6*dt);
+      tWR+=spd*2.4;trG.wheelMs?.forEach(w=>w.rotation.x=tWR);
+    }else if(tAction){const a=tAction;tAction=null;a();}
+  }
+}
+
+// ═══════════════════════════════════
+//  MANUEL SÜRÜŞ SİSTEMİ (2. oyundan)
+// ═══════════════════════════════════
+let driveKeys={};
+let driveToolTimer=0;
+let driveFuelTimer=0;
+
+// Klavye event'leri
+window.addEventListener('keydown',e=>{
+  driveKeys[e.key]=true;
+  // Araç kısayolları (sadece drive modunda değil, her zaman)
+  if(e.key==='1'&&!e.ctrlKey)setTool('hoe');
+  if(e.key==='2'&&!e.ctrlKey)setTool('water');
+  if(e.key==='3'&&!e.ctrlKey)setTool('fertilize');
+  if(e.key==='4'&&!e.ctrlKey)setTool('sickle');
+  if(e.key==='5'&&!e.ctrlKey)setTool('plow');
+  if((e.key==='d'||e.key==='D')&&e.ctrlKey){e.preventDefault();toggleDriveMode();}
+});
+window.addEventListener('keyup',e=>{driveKeys[e.key]=false;});
+
+// D-Pad touch
+function setupDpad(){
+  const map={'dp-up':'ArrowUp','dp-down':'ArrowDown','dp-left':'ArrowLeft','dp-right':'ArrowRight'};
+  for(const [id,key] of Object.entries(map)){
+    const el=document.getElementById(id);
+    if(!el)continue;
+    el.addEventListener('touchstart',e=>{driveKeys[key]=true;el.classList.add('pressed');e.preventDefault();},{passive:false});
+    el.addEventListener('touchend',e=>{driveKeys[key]=false;el.classList.remove('pressed');e.preventDefault();},{passive:false});
+    el.addEventListener('touchcancel',()=>{driveKeys[key]=false;el.classList.remove('pressed');});
+    el.addEventListener('mousedown',()=>{driveKeys[key]=true;el.classList.add('pressed');});
+    el.addEventListener('mouseup',()=>{driveKeys[key]=false;el.classList.remove('pressed');});
+    el.addEventListener('mouseleave',()=>{driveKeys[key]=false;el.classList.remove('pressed');});
+  }
+}
+
+function toggleDriveMode(){
+  if(!S.owned.tractor){toast('Önce traktör satın al!','bad');return;}
+  S.driveMode=!S.driveMode;
+  const btn=document.getElementById('tb-drive');
+  const panel=document.getElementById('drive-panel');
+  const dpad=document.getElementById('dpad');
+  if(S.driveMode){
+    // Sürüş modunu aç
+    if(tRunning){toast('Otomatik görev durduruluyor...','warn');finishTractor();}
+    trG.visible=true;
+    // Traktörü mevcut pozisyona al
+    if(!S.driverPos){S.driverPos={x:0,z:0};}
+    tPos={x:S.driverPos.x,z:S.driverPos.z};
+    trG.position.set(tPos.x,0,tPos.z);
+    trG.rotation.y=S.driverAngle||0;
+    btn.classList.add('drive-on');
+    panel.style.display='block';
+    if(window.innerWidth<=700)dpad.style.display='block';
+    toast('🚜 Manuel sürüş AKTİF! WASD veya ok tuşları.','good');
+    addLog('🚜 Manuel sürüş modu başladı.','good');
+    updateDrivePanel();
+  }else{
+    // Sürüş modunu kapat
+    S.driverPos={x:tPos.x,z:tPos.z};
+    S.driverAngle=trG.rotation.y;
+    trG.visible=false;
+    btn.classList.remove('drive-on');
+    panel.style.display='none';
+    if(window.innerWidth<=700)dpad.style.display='none';
+    toast('🚜 Manuel sürüş kapatıldı.','');
+    addLog('🚜 Manuel sürüş durduruldu.','');
+  }
+}
+
+function updateDrivePanel(){
+  const toolNames={hoe:'⛏ Çapa',water:'💧 Sula',fertilize:'🧪 Gübre',sickle:'🌾 Hasat',plow:'🔄 Temizle'};
+  const seedName=selCrop?`🌱 ${crp(selCrop)?.nm||selCrop}`:'—';
+  document.getElementById('dp-tool').textContent=`Araç: ${tool?toolNames[tool]||tool:seedName}`;
+  document.getElementById('dp-fuel-val').textContent=Math.round(S.fuel);
+  const panel=document.getElementById('drive-panel');
+  if(S.fuel<20)panel.style.borderColor='rgba(231,76,60,.6)';
+  else panel.style.borderColor='rgba(245,197,24,.35)';
+}
+
+// Sürüş motoru güncelleme
+function updateDriving(dt){
+  if(!S.driveMode||!S.owned.tractor)return;
+
+  const baseSpeed=S.owned.eco_engine?5.8:4.5;
+  const lvBonus=Math.min(S.lv/50,2);
+  const spd=baseSpeed*(1+lvBonus);
+
+  let dx=0,dz=0;
+  if(driveKeys['ArrowUp']||driveKeys['w']||driveKeys['W'])dz=-1;
+  if(driveKeys['ArrowDown']||driveKeys['s']||driveKeys['S'])dz=1;
+  if(driveKeys['ArrowLeft']||driveKeys['a']||driveKeys['A'])dx=-1;
+  if(driveKeys['ArrowRight']||driveKeys['d']||driveKeys['D'])dx=1;
+  if(dx&&dz){dx*=0.707;dz*=0.707;}
+
+  const moving=dx!==0||dz!==0;
+  if(moving&&S.fuel>0){
+    // Açı hesapla
+    const targetAngle=Math.atan2(dx,dz);
+    let da=targetAngle-trG.rotation.y;
+    while(da>Math.PI)da-=Math.PI*2;while(da<-Math.PI)da+=Math.PI*2;
+    trG.rotation.y+=da*Math.min(1,8*dt);
+
+    // Hareket
+    let nx=tPos.x+dx*spd*dt*60*0.08;
+    let nz=tPos.z+dz*spd*dt*60*0.08;
+
+    // Tarla sınırları
+    const farmMinX=FOX-2.2,farmMaxX=FOX+(GW-1)*2.5+2.2;
+    const farmMinZ=FOZ-2.2,farmMaxZ=FOZ+(GH-1)*2.5+2.2;
+    nx=Math.max(farmMinX,Math.min(farmMaxX,nx));
+    nz=Math.max(farmMinZ,Math.min(farmMaxZ,nz));
+
+    tPos.x=nx;tPos.z=nz;
+    trG.position.set(tPos.x,0,tPos.z);
+    S.driverPos={x:tPos.x,z:tPos.z};
+    S.driverAngle=trG.rotation.y;
+
+    // Tekerlek animasyonu
+    tWR+=spd*dt*3;
+    trG.wheelMs?.forEach(w=>w.rotation.x=tWR);
+
+    // Araç uygula (her N frame'de)
+    driveToolTimer+=dt;
+    if(driveToolTimer>0.22){
+      driveToolTimer=0;
+      applyDriveTool();
+    }
+
+    // Yakıt tüket
+    driveFuelTimer+=dt;
+    if(driveFuelTimer>2){
+      driveFuelTimer=0;
+      const cost=S.owned.eco_engine?0.4:0.7;
+      S.fuel=Math.max(0,S.fuel-cost);
+      if(S.fuel===0){toast('⛽ Yakıt bitti!','bad');addLog('⛽ Yakıt tükendi!','bad');}
+      updateHUD();updateDrivePanel();
+    }
+
+    // Kamera takip et
+    updateDriveCamera(dt);
+  }
+  // Panel güncelle (fuel rengi için)
+  if(Math.random()<0.05)updateDrivePanel();
+}
+
+function applyDriveTool(){
+  // Traktörün altındaki hücreyi bul
+  const col=Math.round((tPos.x-FOX)/2.5);
+  const row=Math.round((tPos.z-FOZ)/2.5);
+  if(col<0||col>=GW||row<0||row>=GH)return;
+  const i=row*GW+col;
+  const c=S.cells[i];
+
+  let didWork=false;
+  if(tool==='hoe'&&c.st==='empty'){
+    c.st='tilled';refCell(i);spawnParticles3D(tPos.x,.5,tPos.z,'dirt');
+    addLog(`⛏ Parsel ${i+1} çapalandı (sürüş).`);didWork=true;
+  }else if(tool==='water'&&c.st==='planted'&&!c.wa){
+    c.wa=true;c.ws=(c.ws||0)+1;S.stats.watered++;refCell(i);spawnParticles3D(tPos.x,.5,tPos.z,'water');didWork=true;
+    checkQ();
+  }else if(tool==='fertilize'&&c.st==='planted'&&!c.fe&&S.fertCnt>0){
+    c.fe=true;S.fertCnt--;refCell(i);spawnParticles3D(tPos.x,.5,tPos.z,'bubble');didWork=true;
+  }else if(tool==='sickle'&&c.st==='ready'){
+    spawnParticles3D(tPos.x,.5,tPos.z,'money');harvestCell(i);didWork=true;
+  }else if(selCrop&&c.st==='tilled'){
+    const cr=crp(selCrop);
+    if(cr&&S.gold>=cr.buy&&canGrow(selCrop)){
+      S.gold-=cr.buy;c.st='planted';c.crop=selCrop;c.gr=0;c.wa=false;c.fe=false;c.ws=0;
+      refCell(i);spawnParticles3D(tPos.x,.5,tPos.z,'leaf');updateHUD();didWork=true;
+    }
+  }else if(tool==='plow'&&(c.st==='planted'||c.st==='tilled'||c.st==='ready')){
+    c.st='empty';c.crop=null;c.gr=0;c.wa=false;c.fe=false;c.ws=0;
+    if(pMeshes[i]){scene.remove(pMeshes[i]);pMeshes[i]=null;}
+    refCell(i);spawnParticles3D(tPos.x,.5,tPos.z,'dirt');didWork=true;
+  }
+
+  if(didWork){
+    S.stats.driven=(S.stats.driven||0)+1;
+    hlMeshes[i].material.opacity=.85;setTimeout(()=>{if(hlMeshes[i])hlMeshes[i].material.opacity=0;},380);
+    updateHUD();checkQ();
+    if(sideTab==='inv'||sideTab==='trk')renderSide();
+  }
+}
+
+// Kamera drive modunda traktörü takip eder
+let camTarget={th:.5,ph:.95,r:38};
+let camCurrent={th:.5,ph:.95,r:38};
+function updateDriveCamera(dt){
+  if(!S.driveMode)return;
+  // Traktörün arkasından bak
+  const behindAngle=trG.rotation.y+Math.PI;
+  camTarget.th=behindAngle;
+  camTarget.ph=0.88;
+  camTarget.r=22;
+  // Smoothly lerp
+  camCurrent.th+=(camTarget.th-camCurrent.th)*Math.min(1,3*dt);
+  camCurrent.ph+=(camTarget.ph-camCurrent.ph)*Math.min(1,3*dt);
+  camCurrent.r+=(camTarget.r-camCurrent.r)*Math.min(1,3*dt);
+  const x=tPos.x+camCurrent.r*Math.sin(camCurrent.ph)*Math.sin(camCurrent.th);
+  const y=camCurrent.r*Math.cos(camCurrent.ph);
+  const z=tPos.z+camCurrent.r*Math.sin(camCurrent.ph)*Math.cos(camCurrent.th);
+  camera.position.set(x,y,z);
+  camera.lookAt(tPos.x,0,tPos.z);
+}
+
+// ═══════════════════════════════════
+//  PARTİKÜL SİSTEMİ (2D canvas overlay)
+// ═══════════════════════════════════
+const pCanvas=document.getElementById('pcanvas');
+const pCtx=pCanvas.getContext('2d');
+let particles=[];
+
+function resizePCanvas(){pCanvas.width=window.innerWidth;pCanvas.height=window.innerHeight;}
+window.addEventListener('resize',resizePCanvas);resizePCanvas();
+
+// 3D dünya pozisyonunu 2D ekrana yansıt
+function worldToScreen(wx,wy,wz){
+  const v=new THREE.Vector3(wx,wy,wz);
+  v.project(camera);
+  return{
+    x:(v.x+1)/2*pCanvas.width,
+    y:(-v.y+1)/2*pCanvas.height,
+    visible:v.z<1
+  };
+}
+
+function spawnParticles3D(wx,wy,wz,type){
+  const s=worldToScreen(wx,wy,wz);
+  if(!s.visible)return;
+  const configs={
+    dirt:{color:'#8B6914',count:8,r:4,vy:-2.5,vx:2.5,life:0.7},
+    leaf:{color:'#27ae60',count:7,r:5,vy:-3,vx:2,life:0.9},
+    water:{color:'#3498db',count:8,r:4,vy:-2,vx:2,life:0.6},
+    bubble:{color:'#9b59b6',count:6,r:5,vy:-2.5,vx:1.5,life:0.7},
+    money:{color:'#f1c40f',count:10,r:6,vy:-3,vx:3,life:1.2},
+  };
+  const cfg=configs[type]||configs.dirt;
+  for(let i=0;i<cfg.count;i++){
+    particles.push({
+      x:s.x,y:s.y,
+      vx:(Math.random()-.5)*cfg.vx*2,
+      vy:-Math.random()*cfg.vy,
+      life:cfg.life,maxLife:cfg.life,
+      color:cfg.color,r:cfg.r*(0.6+Math.random()*0.8),
+      gravity:0.08,
+      wx,wy,wz,type,
+    });
+  }
+  // Para particülü için emoji
+  if(type==='money'){
+    particles.push({x:s.x,y:s.y-10,vx:(Math.random()-.5),vy:-2.2,life:1.4,maxLife:1.4,
+      color:'#f1c40f',r:0,text:'+₺',wx,wy,wz,type:'text'});
+  }
+}
+
+function updateParticles(dt){
+  particles=particles.filter(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.gravity)p.vy+=p.gravity;
+    p.life-=dt;
+    // 3D konumu güncelle (kamera hareket ederse)
+    if(p.wx!==undefined&&p.type!=='text'){
+      const s=worldToScreen(p.wx,p.wy,p.wz);
+      // Hafifçe dünya konumuna doğru çek
+    }
+    return p.life>0;
+  });
+}
+
+function drawParticles(){
+  pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+  particles.forEach(p=>{
+    const alpha=Math.max(0,p.life/p.maxLife);
+    pCtx.globalAlpha=alpha;
+    if(p.type==='text'){
+      pCtx.fillStyle=p.color;
+      pCtx.font='bold 14px Nunito,sans-serif';
+      pCtx.textAlign='center';
+      pCtx.fillText(p.text,p.x,p.y);
+    }else{
+      pCtx.fillStyle=p.color;
+      pCtx.beginPath();pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);pCtx.fill();
+    }
+  });
+  pCtx.globalAlpha=1;
+}
+
+// ═══════════════════════════════════
+//  GREENHOUSE & SPRINKLERS
+// ═══════════════════════════════════
+let ghM=null;
+function buildGH(){
+  if(ghM){scene.remove(ghM);ghM=null;}
+  if(!S.owned.greenhouse)return;
+  const g=new THREE.Group();
+  const fm=new THREE.MeshPhongMaterial({color:0x44aaff,transparent:true,opacity:.18,side:THREE.DoubleSide,shininess:200});
+  [[12,7,.06,0,3.5,0],[.06,7,14,6,3.5,0],[.06,7,14,-6,3.5,0],[12,.06,14,0,7.1,0]].forEach(([w,h,d,x,y,z])=>{
+    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),fm);m.position.set(x,y,z);g.add(m);
+  });
+  g.position.set(0,0,-2);scene.add(g);ghM=g;
+}
+const sprMs=[];
+function buildSpr(){
+  sprMs.forEach(m=>scene.remove(m));sprMs.length=0;
+  if(!S.owned.sprinkler)return;
+  const sm=new THREE.MeshLambertMaterial({color:0x3388cc});
+  const hm=new THREE.MeshBasicMaterial({color:0x44aaff});
+  for(let r=0;r<GH;r+=4)for(let c=0;c<GW;c+=4){
+    const x=FOX+c*2.5,z=FOZ+r*2.5;
+    const p=new THREE.Mesh(new THREE.CylinderGeometry(.07,.09,1.3,6),sm);p.position.set(x-1.25,.65,z-1.25);scene.add(p);
+    const h=new THREE.Mesh(new THREE.SphereGeometry(.18,8,8),hm);h.position.set(x-1.25,1.4,z-1.25);scene.add(h);
+    sprMs.push(p,h);
+  }
+}
+
+// ═══════════════════════════════════
+//  RAYCASTING + KAMERA (normal mod)
+// ═══════════════════════════════════
+const ray=new THREE.Raycaster(),mse=new THREE.Vector2();let hov=-1;
+renderer.domElement.addEventListener('mousemove',e=>{
+  if(S.driveMode)return;
+  const r=renderer.domElement.getBoundingClientRect();
+  mse.x=((e.clientX-r.left)/r.width)*2-1;mse.y=-((e.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mse,camera);
+  const hits=ray.intersectObjects(cMeshes);
+  if(hits.length){
+    const i=hits[0].object.userData.ci;
+    if(i!==hov){if(hov>=0)hlMeshes[hov].material.opacity=0;hov=i;hlMeshes[i].material.opacity=.5;showCellInfo(i);}
+  }else{if(hov>=0){hlMeshes[hov].material.opacity=0;hov=-1;}document.getElementById('inft').textContent='Bir parsel seçmek için tıkla';}
+});
+renderer.domElement.addEventListener('click',e=>{
+  if(S.driveMode)return;
+  const sideW=window.innerWidth>700?295:0;
+  if(e.clientX>window.innerWidth-sideW)return;
+  const r=renderer.domElement.getBoundingClientRect();
+  mse.x=((e.clientX-r.left)/r.width)*2-1;mse.y=-((e.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mse,camera);
+  const hits=ray.intersectObjects(cMeshes);
+  if(hits.length)clickCell(hits[0].object.userData.ci);
+});
+renderer.domElement.addEventListener('touchend',e=>{
+  if(S.driveMode)return;
+  if(touchMoved)return;
+  e.preventDefault();
+  const t=e.changedTouches[0];
+  const r=renderer.domElement.getBoundingClientRect();
+  mse.x=((t.clientX-r.left)/r.width)*2-1;mse.y=-((t.clientY-r.top)/r.height)*2+1;
+  ray.setFromCamera(mse,camera);
+  const hits=ray.intersectObjects(cMeshes);
+  if(hits.length)clickCell(hits[0].object.userData.ci);
+},{passive:false});
+
+function showCellInfo(i){
+  const c=S.cells[i],cr=c.crop?crp(c.crop):null;
+  let info=`<b>Parsel ${i+1}</b><br>`;
+  if(c.st==='empty')info+='Boş · <span style="color:#80ffe0">Çapala</span>';
+  else if(c.st==='tilled')info+='Çapalı · <span style="color:#80ffe0">Tohum ekebilirsin</span>';
+  else if(c.st==='planted')info+=`${cr.em} <b>${cr.nm}</b> · ${Math.round(c.gr)}/${cr.days} gün (${Math.round(c.gr/cr.days*100)}%)<br>${c.wa?'<span style="color:#44aaff">💧 Sulandı</span>':'<span style="color:#ff9966">⚠️ Su gerekli</span>'}${c.fe?' · <span style="color:#aaff44">🧪 Gübreli</span>':''}`;
+  else if(c.st==='ready')info+=`${cr.em} <b>${cr.nm}</b> · <span style="color:#44ff88">✅ Hasat hazır!</span><br>Piyasa: <span style="color:#f5c518">${mktPrice(cr.id)}₺</span>`;
+  document.getElementById('inft').innerHTML=info;
+}
+
+let camO={th:.5,ph:.95,r:44};
+let isDrag=false,pm2={x:0,y:0};
+renderer.domElement.addEventListener('mousedown',e=>{if(S.driveMode)return;if(e.clientX>window.innerWidth-(window.innerWidth>700?295:0))return;isDrag=true;pm2={x:e.clientX,y:e.clientY};});
+window.addEventListener('mouseup',()=>isDrag=false);
+window.addEventListener('mousemove',e=>{
+  if(!isDrag||S.driveMode)return;
+  const dx=e.clientX-pm2.x,dy=e.clientY-pm2.y;pm2={x:e.clientX,y:e.clientY};
+  camO.th-=dx*.007;camO.ph=Math.max(.25,Math.min(1.48,camO.ph+dy*.007));upCam();
+});
+renderer.domElement.addEventListener('wheel',e=>{if(S.driveMode)return;camO.r=Math.max(12,Math.min(85,camO.r+e.deltaY*.05));upCam();},{passive:true});
+
+let touchStart={x:0,y:0},touchMoved=false;
+renderer.domElement.addEventListener('touchstart',e=>{
+  if(S.driveMode)return;
+  if(e.touches.length===1){touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};touchMoved=false;}
+  if(e.touches.length===2){pinchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+},{passive:true});
+let pinchDist=0;
+renderer.domElement.addEventListener('touchmove',e=>{
+  if(S.driveMode)return;
+  if(e.touches.length===1){
+    const dx=e.touches[0].clientX-touchStart.x,dy=e.touches[0].clientY-touchStart.y;
+    if(Math.abs(dx)>4||Math.abs(dy)>4)touchMoved=true;
+    camO.th-=dx*.005;camO.ph=Math.max(.25,Math.min(1.48,camO.ph+dy*.005));
+    touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};upCam();
+  }
+  if(e.touches.length===2){
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    camO.r=Math.max(12,Math.min(85,camO.r-(d-pinchDist)*.1));pinchDist=d;upCam();
+  }
+},{passive:true});
+function upCam(){
+  if(S.driveMode)return;
+  const x=camO.r*Math.sin(camO.ph)*Math.sin(camO.th),y=camO.r*Math.cos(camO.ph),z=camO.r*Math.sin(camO.ph)*Math.cos(camO.th);
+  camera.position.set(x,y,z);camera.lookAt(0,0,0);
+}
+upCam();
+
+// ═══════════════════════════════════
+//  HÜCRE MANTIK
+// ═══════════════════════════════════
+function clickCell(i){
+  if(tRunning){toast('Traktör çalışıyor!','warn');return;}
+  if(S.driveMode){toast('Manuel sürüş aktif — WASD ile hareket et!','warn');return;}
+  const c=S.cells[i];
+  if(tool==='hoe'){if(c.st!=='empty'){toast('Zaten hazır!','warn');return;}c.st='tilled';refCell(i);spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'dirt');addLog(`⛏ Parsel ${i+1} çapalandı.`);return;}
+  if(tool==='water'){if(c.st!=='planted'){toast('Ekilmiş alan seç!','warn');return;}if(c.wa){toast('Zaten sulandı.','warn');return;}c.wa=true;c.ws=(c.ws||0)+1;S.stats.watered++;refCell(i);spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'water');addLog('💧 Sulama yapıldı.');checkQ();return;}
+  if(tool==='fertilize'){if(S.fertCnt<=0){toast('Gübre yok!','bad');return;}if(c.st!=='planted'){toast('Ekilmiş alan seç!','warn');return;}if(c.fe){toast('Zaten gübreli.','warn');return;}c.fe=true;S.fertCnt--;refCell(i);spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'bubble');addLog('🧪 Gübre uygulandı!','good');updateHUD();return;}
+  if(tool==='sickle'){if(c.st!=='ready'){toast('Olgun ürün yok!','warn');return;}spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'money');harvestCell(i);return;}
+  if(tool==='plow'){c.st='empty';c.crop=null;c.gr=0;c.wa=false;c.fe=false;c.ws=0;if(pMeshes[i]){scene.remove(pMeshes[i]);pMeshes[i]=null;}refCell(i);spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'dirt');addLog(`🔄 Parsel ${i+1} temizlendi.`);return;}
+  if(selCrop){
+    if(c.st!=='tilled'){toast('Önce çapala!','warn');return;}
+    if(!canGrow(selCrop)){toast('Bu mevsimde yetişmez! Sera al.','bad');return;}
+    const cr=crp(selCrop);
+    if(S.gold<cr.buy){toast(`Para yetmez! ${cr.buy}₺ gerek.`,'bad');return;}
+    S.gold-=cr.buy;c.st='planted';c.crop=selCrop;c.gr=0;c.wa=false;c.fe=false;c.ws=0;
+    refCell(i);spawnParticles3D(cellPos(i).x,.5,cellPos(i).z,'leaf');addLog(`🌱 ${cr.nm} ekildi! (-${cr.buy}₺)`,'good');updateHUD();return;
+  }
+  toast('Araç veya tohum seç!','warn');
+}
+
+function harvestCell(i){
+  const c=S.cells[i],cr=crp(c.crop);
+  const bonus=Math.floor((c.ws||0)/cr.days*2);
+  let qty=1+bonus+(c.fe?1:0)+Math.min(Math.floor(S.lv/10),50)+(S.owned.golden_seed?1:0);
+  let lucky=false;
+  if(S.owned.lucky_charm&&Math.random()<.10){qty+=1;lucky=true;}
+  S.inv[c.crop]=(S.inv[c.crop]||0)+qty;
+  S.stats.harvests+=qty;
+  addXP(cr.xp*qty);
+  addLog(`🌾 ${cr.nm} ×${qty} hasat! +${cr.xp*qty}XP${lucky?' 🍀':''}`,'good');
+  toast(`${cr.em} ×${qty} hasat!${lucky?' 🍀':''}`,'good');
+  c.st='tilled';c.crop=null;c.gr=0;c.wa=false;c.fe=false;c.ws=0;
+  if(pMeshes[i]){scene.remove(pMeshes[i]);pMeshes[i]=null;}
+  refCell(i);updateHUD();checkQ();if(sideTab==='inv')renderSide();
+}
+
+// ═══════════════════════════════════
+//  FISHING
+// ═══════════════════════════════════
+let fishState={phase:'idle',timer:0,catch:null};
+function openFish(){
+  if(!S.owned.fishing_rod){toast('Önce olta satın al!','bad');return;}
+  fishState={phase:'idle',timer:0,catch:null};
+  document.getElementById('fishpop').classList.add('on');renderFish();
+}
+function closeFish(){document.getElementById('fishpop').classList.remove('on');fishState={phase:'idle',timer:0,catch:null};}
+function renderFish(){
+  const fc=document.getElementById('fishcont');
+  if(fishState.phase==='idle'){
+    fc.innerHTML=`<div style="text-align:center;padding:16px 0"><div style="font-size:3rem;margin-bottom:12px">🎣</div><div style="font-size:13px;color:var(--text2);margin-bottom:18px">Gölette balık tutmak için oltayı at!</div><button onclick="castLine()" style="background:linear-gradient(135deg,#2980b9,#3498db);border:none;border-radius:10px;padding:12px 28px;color:white;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif">🪁 Oltayı At!</button></div>`;
+  }else if(fishState.phase==='waiting'){
+    fc.innerHTML=`<div style="text-align:center;padding:16px 0"><div style="font-size:2.5rem;margin-bottom:10px;animation:lp 1s ease-in-out infinite">🪁</div><div style="font-size:13px;color:var(--teal);margin-bottom:6px">Olta suda bekliyor...</div><div style="font-size:11px;color:var(--text2)">Balık ısırınca hemen tıkla!</div></div>`;
+  }else if(fishState.phase==='bite'){
+    fc.innerHTML=`<div style="text-align:center;padding:16px 0"><div style="font-size:3rem;margin-bottom:10px">❗</div><div style="font-size:16px;color:#f5c518;font-weight:800;margin-bottom:16px">BALIK IRISIRDI! HEMEN TUKLA!</div><button onclick="catchFish()" style="background:linear-gradient(135deg,#e67e22,#f39c12);border:none;border-radius:10px;padding:14px 32px;color:white;font-size:16px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;animation:lp .4s ease-in-out infinite">🐟 TUKI!</button></div>`;
+  }else if(fishState.phase==='caught'){
+    const f=fishState.catch;
+    fc.innerHTML=`<div style="text-align:center;padding:16px 0"><div style="font-size:3.5rem;margin-bottom:12px">${f.em}</div><div style="font-size:16px;font-weight:800;margin-bottom:6px">${f.nm} Yakaladın!</div><div style="font-size:12px;color:var(--gold);margin-bottom:18px">+${f.base}₺ +${f.xp}XP</div><button onclick="castLine()" style="background:linear-gradient(135deg,#2980b9,#3498db);border:none;border-radius:10px;padding:10px 22px;color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;margin-right:8px">Tekrar At</button><button onclick="closeFish()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px 22px;color:var(--text);font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">Kapat</button></div>`;
+  }else if(fishState.phase==='escaped'){
+    fc.innerHTML=`<div style="text-align:center;padding:16px 0"><div style="font-size:2.5rem;margin-bottom:10px">💨</div><div style="font-size:14px;color:var(--red);font-weight:700;margin-bottom:16px">Balık kaçtı!</div><button onclick="castLine()" style="background:linear-gradient(135deg,#2980b9,#3498db);border:none;border-radius:10px;padding:10px 22px;color:white;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif">Tekrar Dene</button></div>`;
+  }
+}
+function castLine(){
+  fishState={phase:'waiting',timer:0,catch:null};renderFish();
+  const baseDelay=S.owned.pro_rod?(1000+Math.random()*2500):(2000+Math.random()*5000);
+  const biteWindow=S.owned.pro_rod?2200:1500;
+  fishState._t=setTimeout(()=>{fishState.phase='bite';renderFish();fishState._t2=setTimeout(()=>{if(fishState.phase==='bite'){fishState.phase='escaped';renderFish();}},biteWindow);},baseDelay);
+}
+function catchFish(){
+  if(fishState.phase!=='bite')return;
+  clearTimeout(fishState._t2);
+  let pool=FISH_LIST;
+  if(S.owned.pro_rod){
+    pool=FISH_LIST.map(f=>{
+      if(f.id==='sardine')return{...f,rarity:f.rarity*0.6};
+      if(f.id==='trout')return{...f,rarity:f.rarity*0.85};
+      return{...f,rarity:f.rarity*1.8};
+    });
+    const sum=pool.reduce((s,f)=>s+f.rarity,0);
+    pool=pool.map(f=>({...f,rarity:f.rarity/sum}));
+  }
+  let rand=Math.random(),cum=0,caught=pool[0];
+  for(const f of pool){cum+=f.rarity;if(rand<cum){caught=f;break;}}
+  fishState.phase='caught';fishState.catch=caught;
+  S.gold+=caught.base;S.stats.earned+=caught.base;S.stats.fish++;
+  addXP(caught.xp);
+  S.inv[caught.id]=(S.inv[caught.id]||0)+1;
+  addLog(`🐟 ${caught.nm} yakalandı! +${caught.base}₺`,'good');
+  toast(`${caught.em} +${caught.base}₺`,'gold');
+  updateHUD();checkQ();renderFish();
+}
+
+// ═══════════════════════════════════
+//  MARKET
+// ═══════════════════════════════════
+function openMkt(){
+  document.getElementById('mktpop').classList.add('on');
+  const c=document.getElementById('mktcont');
+  c.innerHTML=`<div style="font-size:10px;color:var(--text2);margin-bottom:12px;letter-spacing:1px">HAFTALIK FIYATLAR (BAZAR GÜN ${S.mktWeek})</div>`+
+  CROPS.map(cr=>{
+    const mod=mktMods[cr.id]||1,pr=mktPrice(cr.id),diff=pr-cr.sell;
+    const col=diff>0?'#7aff9e':diff<0?'#ff8888':'var(--text2)';
+    const arrow=diff>0?'▲':diff<0?'▼':'—';
+    return `<div class="ii"><div><div style="font-size:12px;font-weight:700">${cr.em} ${cr.nm}</div><div style="font-size:10px;color:var(--text2)">Baz: ${cr.sell}₺</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:800;color:${col}">${pr}₺ <span style="font-size:10px">${arrow}</span></div><div style="font-size:9px;color:var(--text2)">${(mod*100).toFixed(0)}%</div></div></div>`;
+  }).join('')+
+  `<button onclick="closeMkt()" style="width:100%;margin-top:10px;padding:10px;background:rgba(26,188,156,.15);border:1px solid rgba(26,188,156,.3);border-radius:9px;color:#80ffe0;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">Kapat</button>`;
+}
+function closeMkt(){document.getElementById('mktpop').classList.remove('on');}
+
+// ═══════════════════════════════════
+//  NEXT DAY
+// ═══════════════════════════════════
+function nextDay(){
+  if(S.driveMode){toast('Önce manuel sürüşü kapat!','warn');return;}
+  S.day++;S.sd++;S.stats.day=S.day;
+  if(S.sd>season().days){S.sd=1;S.si=(S.si+1)%4;addLog(`🌍 ${season().nm} başladı!`,'good');upSky();}
+  if(S.day%7===0){S.mktWeek++;rollMkt();addLog('📈 Haftalık piyasa güncellendi!','good');}
+  rollWeather();
+  const w=wd();let aw=0;
+  S.cells.forEach((c,i)=>{
+    if(c.st!=='planted')return;
+    if(w.aw||S.owned.drip||S.owned.sprinkler){c.wa=true;aw++;S.stats.watered++;}
+    if(S.owned.well){const col=i%GW,row=Math.floor(i/GW);if(col%4<2&&row%4<2){c.wa=true;}}
+  });
+  if(aw)addLog(`💧 ${aw} parsel otomatik sulandı.`,'good');
+  let ripe=0,wilt=0;
+  S.cells.forEach((c,i)=>{
+    if(c.st!=='planted')return;
+    const cr=crp(c.crop);
+    if(!c.wa){
+      c.ws=0;let wiltChance=S.owned.scarecrow?.18:.35;
+      if(S.owned.green_thumb)wiltChance*=0.5;
+      if(Math.random()<wiltChance){c.gr=Math.max(0,c.gr-.5);wilt++;}
+      refCell(i);return;
+    }
+    c.ws=(c.ws||0)+1;
+    let gm=w.gm+(c.fe?.2:0)+(S.owned.greenhouse?.32:0)+(S.owned.scarecrow&&w.gm<1?(1-w.gm)*.5:0);
+    gm+=Math.min(S.lv/100,1.5);
+    c.gr+=gm;c.wa=false;
+    if(c.gr>=cr.days){c.st='ready';ripe++;}refCell(i);
+  });
+  if(ripe){addLog(`🎉 ${ripe} ürün hasat hazır!`,'good');toast(`🎉 ${ripe} ürün hasat hazır!`,'good');}
+  if(wilt)addLog(`🥀 ${wilt} bitki büyüyemedi.`,'bad');
+  let ag=0;
+  S.animals.forEach(a=>{
+    if(a.type==='chicken'){S.inv['egg']=(S.inv['egg']||0)+1;ag+=25;}
+    if(a.type==='cow'){S.inv['milk']=(S.inv['milk']||0)+1;ag+=50;}
+  });
+  if(ag){S.gold+=ag;S.stats.earned+=ag;addLog(`🐄 Hayvanlar +${ag}₺`,'good');}
+  if(S.owned.bee_hive){S.beeTmr++;if(S.beeTmr>=3){S.inv['honey']=(S.inv['honey']||0)+1;S.beeTmr=0;addLog('🍯 Bal toplandı!','good');}}
+  if(S.owned.windmill){S.gold+=30;S.stats.earned+=30;addLog('⚙️ Değirmen +30₺','good');}
+  if(S.owned.solar){S.gold+=50;S.stats.earned+=50;addLog('🔆 Güneş paneli +50₺','good');}
+  if(S.owned.compost){S.compostTmr++;if(S.compostTmr>=5){S.fertCnt+=2;S.compostTmr=0;addLog('♻️ Kompost → 2x gübre','good');}}
+  checkNeighbors();
+  if(S.owned.tractor&&S.fuel<20)addLog('⛽ Traktör yakıtı azalıyor!','warn');
+  addLog(`📅 Gün ${S.day} · ${season().nm} · ${wd().lb}`,'');
+  updateHUD();renderSide();checkQ();saveGame();publishScore();
+}
+
+function rollWeather(){
+  const pool=SEA_W[S.si];S.weather=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('wbi').textContent=wd().ic;document.getElementById('wbl').textContent=wd().lb;
+  rainObj.visible=(S.weather==='rainy');snowObj.visible=(S.weather==='snowy');
+}
+
+function checkNeighbors(){
+  NEIGHBORS.forEach(n=>{
+    if(Math.random()<.22){
+      const msg=n.msg[Math.floor(Math.random()*n.msg.length)];addLog(`💬 ${n.nm}: ${msg}`,'');
+      if(Math.random()<.15){
+        if(n.gift==='fertilizer'){S.fertCnt+=2;toast(`🎁 ${n.nm} 2x gübre hediye etti!`,'good');}
+        else if(n.gift==='fuel'){S.fuel=Math.min(100,S.fuel+20);toast(`🎁 ${n.nm} yakıt hediye etti!`,'good');}
+        else if(n.gift==='seed_wheat'){S.gold+=50;toast(`🎁 ${n.nm} 50₺ hediye etti!`,'gold');}
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════
+//  SELL
+// ═══════════════════════════════════
+function sellAll(id){
+  const qty=S.inv[id]||0;if(!qty){toast('Stok yok!','warn');return;}
+  const pr=mktPrice(id),total=qty*pr;S.gold+=total;S.stats.earned+=total;S.inv[id]=0;
+  addLog(`💰 ${qty}x satıldı! +${total}₺`,'good');toast(`💰 +${total}₺`,'gold');updateHUD();renderSide();checkQ();
+}
+function sellOne(id){
+  const qty=S.inv[id]||0;if(!qty){toast('Stok yok!','warn');return;}
+  const pr=mktPrice(id);S.gold+=pr;S.stats.earned+=pr;S.inv[id]=qty-1;
+  toast(`+${pr}₺`,'gold');updateHUD();renderSide();checkQ();
+}
+
+// ═══════════════════════════════════
+//  BUY
+// ═══════════════════════════════════
+function buyItem(id){
+  const item=SHOP.find(i=>i.id===id);if(!item)return;
+  if(S.gold<item.pr){toast('Para yetmez!','bad');return;}
+  if(id==='fertilizer'){S.gold-=item.pr;S.fertCnt+=5;toast('🧪 Gübre ×5!','good');updateHUD();renderSide();return;}
+  if(id==='fuel_can'){S.gold-=item.pr;S.fuel=Math.min(100,S.fuel+50);toast('⛽ Yakıt!','good');updateHUD();renderSide();return;}
+  if(id==='chicken'||id==='cow'){if(!S.owned.barn){toast('Ahır gerekli!','bad');return;}S.gold-=item.pr;S.animals.push({type:id});toast(`${item.em} Alındı!`,'good');updateHUD();renderSide();return;}
+  if(S.owned[id]){toast('Zaten sahipsin!','warn');return;}
+  S.gold-=item.pr;S.owned[id]=true;
+  if(id==='tractor'){trG.visible=false;document.getElementById('fpill').style.display='flex';toast('🚜 Traktör alındı! "Sürmek" butonuyla manuel sürebilirsin!','good');}
+  if(id==='greenhouse')buildGH();
+  if(id==='sprinkler')buildSpr();
+  if(id==='fishing_rod')document.getElementById('fpop').style.display='flex';
+  if(id==='solar')solarG.visible=true;
+  toast(`${item.em} ${item.nm} alındı!`,'good');addLog(`🛒 ${item.nm} satın alındı.`,'good');updateHUD();renderSide();
+}
+
+// ═══════════════════════════════════
+//  HUD
+// ═══════════════════════════════════
+function updateHUD(){
+  document.getElementById('hg').textContent=S.gold.toLocaleString('tr-TR');
+  document.getElementById('hd').textContent=S.day;
+  document.getElementById('hs').textContent=season().nm;
+  document.getElementById('sbi').textContent=season().ic;
+  document.getElementById('sbn').textContent=season().nm;
+  document.getElementById('sbd').textContent=`${S.sd}/${season().days}`;
+  if(S.owned.tractor){document.getElementById('fpill').style.display='flex';document.getElementById('hf').textContent=Math.round(S.fuel);}
+  if(S.owned.fishing_rod)document.getElementById('fpop').style.display='flex';
+  document.getElementById('hfish').textContent=S.stats.fish||0;
+  updateXPBar();
+}
+
+function setTool(id){
+  tool=id;selCrop=null;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tb-'+id)?.classList.add('on');
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+  if(S.driveMode)updateDrivePanel();
+}
+function setSeed(id){
+  selCrop=id;tool=null;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sb-'+id)?.classList.add('on');
+  if(S.driveMode)updateDrivePanel();
+}
+function buildSeedBtns(){
+  const html=CROPS.map(c=>`<button class="sbtn" id="sb-${c.id}" onclick="setSeed('${c.id}')" title="${c.nm} · ${c.days}g · ${c.sell}₺ · ${c.xp}XP">${c.em} ${c.nm.substring(0,5)}</button>`).join('');
+  document.getElementById('sbtns').innerHTML=html;
+  document.getElementById('mob-sbtns').innerHTML=CROPS.map(c=>`
+    <button onclick="setSeed('${c.id}');closeSeedPanel()" id="msb-${c.id}"
+      style="background:rgba(255,255,255,.05);border:1px solid rgba(39,174,96,.2);border-radius:10px;
+      padding:10px 6px;cursor:pointer;font-family:'Nunito',sans-serif;color:#cde8d4;
+      display:flex;flex-direction:column;align-items:center;gap:4px;min-height:70px;
+      font-size:22px;transition:all .15s;-webkit-tap-highlight-color:transparent">
+      <span>${c.em}</span>
+      <span style="font-size:10px;font-weight:800;color:#80ffe0">${c.nm}</span>
+      <span style="font-size:9px;color:rgba(180,230,180,.5)">${c.buy}₺</span>
+    </button>`).join('');
+}
+
+function toggleSeedPanel(){
+  const p=document.getElementById('mob-seed-panel');
+  const isOpen=p.style.display!=='none';
+  if(isOpen){closeSeedPanel();}else{p.style.display='block';document.getElementById('tb-seed-toggle').classList.add('on');}
+}
+function closeSeedPanel(){
+  document.getElementById('mob-seed-panel').style.display='none';
+  document.getElementById('tb-seed-toggle')?.classList.remove('on');
+}
+
+function setSide(tab){
+  sideTab=tab;
+  const tabs=['trk','shp','inv','qst','nbr','frd','log'];
+  document.querySelectorAll('.stb').forEach((t,i)=>t.classList.toggle('on',tabs[i]===tab));
+  renderSide();if(tab==='frd')loadFriends();
+}
+
+function renderSide(){
+  const b=document.getElementById('sbod');
+  if(sideTab==='trk')b.innerHTML=renderTrk();
+  else if(sideTab==='shp')b.innerHTML=renderShp();
+  else if(sideTab==='inv')b.innerHTML=renderInv();
+  else if(sideTab==='qst')b.innerHTML=renderQst();
+  else if(sideTab==='nbr')b.innerHTML=renderNbr();
+  else if(sideTab==='frd')b.innerHTML=renderFrd();
+  else if(sideTab==='log')b.innerHTML=renderLog();
+}
+
+function renderTrk(){
+  if(!S.owned.tractor)return`<div style="color:var(--text2);font-size:12px;text-align:center;padding:32px 8px;line-height:2.2">🚜 Traktör almak için<br>🏪 Dükkan sekmesine git.</div>`;
+  const f=S.fuel;
+  const fc=f>30?'linear-gradient(90deg,#27ae60,#1abc9c)':'linear-gradient(90deg,#e74c3c,#e67e22)';
+  const atts=[{id:'plow_a',nm:'Pulluk',em:'🔧',task:'till'},{id:'seed_a',nm:'Ekim',em:'🌱',task:'seed'},{id:'spray_a',nm:'Sulama',em:'💦',task:'spray'},{id:'harvest_a',nm:'Biçer',em:'⚙️',task:'harvest'}];
+  const driveOn=S.driveMode;
+  return `<div class="ps"><div class="pt">TRAKTÖR · ${driveOn?'<span style="color:var(--gold)">MANUEL SÜRÜŞ AKTİF</span>':'Hazır'}</div>
+    <div class="tstt"><span>⛽ Yakıt</span><div class="bw"><div class="bf" style="width:${f}%;background:${fc}"></div></div><span>${Math.round(f)}%</span></div>
+    <button class="pbtn" onclick="toggleDriveMode()" style="${driveOn?'border-color:var(--gold);color:var(--gold)':''}">${driveOn?'🛑 Manuel Sürüşü Durdur':'🚜 Manuel Sürüşü Başlat'}</button>
+    <div style="font-size:9px;color:var(--text2);line-height:1.8;margin-bottom:8px">
+      ${driveOn?`<span style="color:var(--teal)">▶ WASD / Ok tuşları ile hareket<br>▶ Seçili araç otomatik uygulanır<br>▶ Mobil: D-Pad sol altta</span>`:
+      '<span style="opacity:.6">WASD veya ok tuşları ile traktörü sürmek için Manuel Sürüşü başlat</span>'}
+    </div>
+    <div style="font-size:10px;color:var(--text2);margin-bottom:10px;line-height:1.9">
+      Manuel işlenen hücre: <b style="color:var(--teal)">${S.stats.driven||0}</b><br>
+      Hayvanlar: ${S.animals.map(a=>a.type==='chicken'?'🐔':'🐄').join('')||'—'}<br>
+      Gübre stoku: ${S.fertCnt}<br>
+      <span style="color:#bb8fce">⭐ XP: ${S.xp} · Lv.${xpLv(S.xp)}</span>
+    </div>
+  </div>
+  <div class="ps"><div class="pt">OTOMATİK GÖREVLER</div>
+    <div style="font-size:9px;color:var(--text2);margin-bottom:6px">Tüm tarlayı otomatik işler (aparata bağlı)</div>
+    ${atts.map(a=>`<button class="pbtn" onclick="runTask('${a.task}')" ${!S.owned[a.id]||tRunning||f<=0||driveOn?'disabled':''}>
+      ${a.em} ${a.nm} <span class="bg">${S.owned[a.id]?'✓':'—'}</span></button>`).join('')}
+    <button class="pbtn" onclick="runTask('fertilize')" ${!S.owned.tractor||tRunning||S.fertCnt<=0||driveOn?'disabled':''}>🧪 Gübrele Tümü <span class="bg">${S.fertCnt}x</span></button>
+  </div>
+  <div class="ps"><div class="pt">ALTYAPI</div>
+    <div style="font-size:10px;line-height:2.1;color:var(--text2)">
+      ${['drip','sprinkler','greenhouse','windmill','well','scarecrow','solar','compost','fishing_rod'].map(id=>{const it=SHOP.find(i=>i.id===id);return `${S.owned[id]?'<span style="color:var(--teal)">✅</span>':'❌'} ${it?.nm||id}`}).join('<br>')}
+    </div>
+  </div>
+  ${(S.owned.eco_engine||S.owned.golden_seed||S.owned.lucky_charm||S.owned.fast_oven||S.owned.pro_rod||S.owned.green_thumb)?`<div class="ps"><div class="pt">KOMŞU ÖZELLERİ</div>
+    <div style="font-size:10px;line-height:2.1;color:var(--text2)">
+      ${S.owned.eco_engine?'🔋 Verimli Motor <span style="color:var(--teal)">(hız +%28 + az yakıt)</span><br>':''}
+      ${S.owned.golden_seed?'✨ Altın Tohum Çantası <span style="color:var(--teal)">(+1 hasat)</span><br>':''}
+      ${S.owned.lucky_charm?'🍀 Uğur Tılsımı <span style="color:var(--teal)">(%10 ek şans)</span><br>':''}
+      ${S.owned.fast_oven?'🥖 Hızlı Fırın <span style="color:var(--teal)">(+%25 hayvan ürün satışı)</span><br>':''}
+      ${S.owned.pro_rod?'🎯 Profesyonel Olta <span style="color:var(--teal)">(hızlı + nadir balık)</span><br>':''}
+      ${S.owned.green_thumb?'🧤 Yeşil Parmak <span style="color:var(--teal)">(-%50 solma riski)</span>':''}
+    </div>
+  </div>`:''}`;
+}
+
+function renderShp(){
+  return `<div class="ps"><div class="pt">DÜKKAN · ${S.gold.toLocaleString('tr-TR')}₺</div></div>`+
+  SHOP.map(it=>{
+    const own=S.owned[it.id];const ca=S.gold>=it.pr;
+    const nb=(it.id==='chicken'||it.id==='cow')&&!S.owned.barn;
+    return `<div class="sc"><h4>${it.em} ${it.nm}</h4><p>${it.ds}</p>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--gold);font-size:12px;font-weight:800">${it.pr.toLocaleString('tr-TR')}₺</span>
+        ${own&&it.id!=='fertilizer'&&it.id!=='fuel_can'?`<span class="otg">✓ SAHİP</span>`:`<button class="sbuy" onclick="buyItem('${it.id}')" ${!ca||nb?'disabled':''}>${nb?'Ahır Lazım':ca?'Satın Al':'Az Para'}</button>`}
+      </div></div>`;}).join('');
+}
+
+function renderInv(){
+  const items=[];
+  CROPS.forEach(c=>{if((S.inv[c.id]||0)>0)items.push({id:c.id,nm:c.nm,em:c.em,qty:S.inv[c.id],sell:mktPrice(c.id)});});
+  [{id:'egg',nm:'Yumurta',em:'🥚'},{id:'milk',nm:'Süt',em:'🥛'},{id:'honey',nm:'Bal',em:'🍯'}]
+    .concat(FISH_LIST.map(f=>({id:f.id,nm:f.nm,em:f.em})))
+    .forEach(s=>{if((S.inv[s.id]||0)>0)items.push({...s,qty:S.inv[s.id],sell:mktPrice(s.id)});});
+  if(!items.length)return`<div style="color:var(--text2);font-size:12px;text-align:center;padding:32px 8px;line-height:2.2">Envanter boş.<br>Ürün hasat et!</div>`;
+  const tot=items.reduce((s,it)=>s+it.qty*it.sell,0);
+  return `<div class="ps"><div class="pt">ENVANTER · ${tot.toLocaleString('tr-TR')}₺</div></div>`+
+  items.map(it=>`<div class="ii"><div><div style="font-size:12px;font-weight:700">${it.em} ${it.nm}</div><div style="font-size:10px;color:var(--text2)">×${it.qty} · ${(it.qty*it.sell).toLocaleString('tr-TR')}₺</div></div><div style="display:flex;gap:4px"><button class="slb" onclick="sellOne('${it.id}')">×1</button><button class="slb" style="background:rgba(26,188,156,.28)" onclick="sellAll('${it.id}')">Tümü</button></div></div>`).join('');
+}
+
+function renderQst(){
+  return `<div class="ps"><div class="pt">GÖREVLER</div></div>`+
+  QUEST_DEFS.map(q=>{
+    const done=S.doneQ.includes(q.id);
+    const val=q.stat==='day'?S.day:(S.stats[q.stat]||0);
+    const pct=Math.min(100,(val/q.goal)*100);
+    return `<div class="qi" style="${done?'opacity:.45':''}"><div class="qt">${done?'🏆':'📜'} ${q.ti}</div><div class="qd">${q.ds}</div>
+      ${!done?`<div class="qb"><div class="qf" style="width:${pct}%"></div></div><div style="font-size:9px;color:var(--text2);margin-bottom:3px">${Math.min(val,q.goal)} / ${q.goal}</div>`:''}
+      <div class="${done?'qdn':'qr'}">${done?'✓ Tamam!':'+'+q.reward+'₺ +'+q.rxp+'XP'}</div></div>`;}).join('');
+}
+
+function renderNbr(){
+  return `<div class="ps"><div class="pt">KOMŞULAR</div>`+
+  NEIGHBORS.map(n=>{
+    const cd=S.nbrDay&&S.nbrDay[n.id]===S.day;const sp=n.special;const owned=sp&&S.owned[sp.id];const canAfford=sp&&S.gold>=sp.pr;
+    return `<div class="sc"><div onclick="talkNbr('${n.id}')" style="cursor:pointer;${cd?'opacity:.5':''}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-size:22px">${n.em}</div>
+      <div><div style="font-size:12px;font-weight:800">${n.nm}</div><div style="font-size:9px;color:var(--text2)">${n.trait}</div></div></div>
+      <div style="font-size:10px;color:var(--text2);font-style:italic">${n.msg[S.day%n.msg.length]}</div>
+      <div style="font-size:9px;color:var(--teal);margin-top:5px;font-weight:700">${cd?'✓ Bugün konuşuldu':'👆 Konuşmak için tıkla'}</div></div>
+      ${sp?`<div style="border-top:1px solid rgba(39,174,96,.12);margin-top:8px;padding-top:8px">
+      <div style="font-size:10px;font-weight:800;margin-bottom:2px">${sp.em} ${sp.nm}</div>
+      <div style="font-size:9px;color:var(--text2);line-height:1.5;margin-bottom:6px">${sp.ds}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--gold);font-size:12px;font-weight:800">${sp.pr.toLocaleString('tr-TR')}₺</span>
+        ${owned?`<span class="otg">✓ SAHİP</span>`:`<button class="sbuy" onclick="buyNbrSpecial('${n.id}')" ${!canAfford?'disabled':''}>${canAfford?'Satın Al':'Az Para'}</button>`}
+      </div></div>`:''}
+    </div>`;}).join('')+`</div>
+  <div class="ps"><div class="pt">İSTATİSTİKLER</div>
+    ${[['Toplam Gün',S.day],['Hasat',S.stats.harvests||0],['Kazanılan',`${(S.stats.earned||0).toLocaleString('tr-TR')}₺`],['Sulama',S.stats.watered||0],['Balık',S.stats.fish||0],['Manuel Sürüş',S.stats.driven||0],['Tamamlanan Görev',S.doneQ.length],['XP',S.xp],['Seviye',xpLv(S.xp)]].map(([k,v])=>`<div class="statrow"><span>${k}</span><span class="sv">${v}</span></div>`).join('')}
+  </div>`;
+}
+
+function buyNbrSpecial(nid){
+  const n=NEIGHBORS.find(x=>x.id===nid);if(!n||!n.special)return;
+  const sp=n.special;
+  if(S.owned[sp.id]){toast('Zaten sahipsin!','warn');return;}
+  if(S.gold<sp.pr){toast('Para yetmez!','bad');return;}
+  S.gold-=sp.pr;S.owned[sp.id]=true;
+  toast(`${sp.em} ${sp.nm} alındı!`,'good');addLog(`🤝 ${n.nm}'dan ${sp.nm} satın alındı!`,'good');
+  updateHUD();renderSide();
+}
+
+function talkNbr(id){
+  const n=NEIGHBORS.find(x=>x.id===id);if(!n)return;
+  if(!S.nbrDay)S.nbrDay={};
+  if(S.nbrDay[id]===S.day){toast(`${n.em} ${n.nm}: bugün zaten konuştuk!`,'warn');return;}
+  S.nbrDay[id]=S.day;
+  const msg=n.msg[Math.floor(Math.random()*n.msg.length)];
+  addLog(`💬 ${n.nm}: ${msg}`,'');toast(`${n.em} ${n.nm}: ${msg}`,'');
+  if(Math.random()<.35){
+    if(n.gift==='fertilizer'){S.fertCnt+=2;toast(`🎁 ${n.nm} 2x gübre verdi!`,'good');}
+    else if(n.gift==='fuel'){S.fuel=Math.min(100,S.fuel+20);toast(`🎁 ${n.nm} yakıt verdi!`,'good');}
+    else if(n.gift==='seed_wheat'){S.gold+=50;toast(`🎁 ${n.nm} 50₺ verdi!`,'gold');}
+  }
+  updateHUD();renderSide();
+}
+
+function renderLog(){
+  if(!logLines.length)return`<div style="color:var(--text2);font-size:11px;text-align:center;padding:32px 8px">Kayıt yok.</div>`;
+  return logLines.map(l=>`<div style="font-size:10px;line-height:1.85;border-bottom:1px solid rgba(39,174,96,.07);padding-bottom:2px;margin-bottom:2px;color:${l.tp==='good'?'#7aff9e':l.tp==='bad'?'#ff8888':l.tp==='warn'?'#ffcc44':'var(--text2)'}">Gün ${l.day}: ${l.msg}</div>`).join('');
+}
+
+// ═══════════════════════════════════
+//  FRIENDS / LEADERBOARD
+// ═══════════════════════════════════
+let friendsData=[],friendsLoading=false,friendsErr=null;
+function renderFrd(){
+  if(friendsLoading)return`<div class="ps"><div class="pt">ARKADAŞLAR / LİDERLİK</div></div><div style="text-align:center;padding:30px 8px;color:var(--text2);font-size:11px">⏳ Yükleniyor...</div>`;
+  const me=cUser||'?';
+  const sorted=[...friendsData].sort((a,b)=>(b.xp||0)-(a.xp||0));
+  const rows=sorted.map((f,i)=>{
+    const isMe=f.username===me;const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`;
+    return `<div class="ii" style="${isMe?'border-color:rgba(26,188,156,.5);background:rgba(26,188,156,.08)':''}">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;min-width:28px">${medal}</span>
+      <div><div style="font-size:12px;font-weight:800">${f.farmName||'Çiftlik'} ${isMe?'<span style="color:var(--teal);font-size:9px">(SEN)</span>':''}</div>
+      <div style="font-size:9px;color:var(--text2)">👤 ${f.username||'?'} · Gün ${f.day||1}</div></div></div>
+      <div style="text-align:right"><div style="font-size:12px;font-weight:800;color:var(--gold)">Lv.${(f.level||1).toLocaleString('tr-TR')}</div>
+      <div style="font-size:9px;color:var(--text2)">${(f.xp||0).toLocaleString('tr-TR')} XP</div></div></div>`;
+  }).join('');
+  return `<div class="ps"><div class="pt">ARKADAŞLAR / LİDERLİK</div>
+    <button class="sbuy" style="width:100%;margin-bottom:8px" onclick="publishScore();loadFriends()">🔄 Yenile / Skoru Gönder</button>
+    ${friendsErr?`<div style="font-size:10px;color:#ff8888;margin-bottom:8px">${friendsErr}</div>`:''}
+  </div>
+  ${sorted.length?rows:`<div style="color:var(--text2);font-size:11px;text-align:center;padding:24px 8px">Henüz kimse yok. Sen ilk ol!</div>`}`;
+}
+async function publishScore(){
+  if(!cUser||cUser==='Misafir')return;
+  try{await window.storage.set('player:'+cUser,JSON.stringify({username:cUser,farmName:farmName,level:xpLv(S.xp),xp:S.xp,day:S.day,gold:S.gold,updated:Date.now()}),true);}
+  catch(e){friendsErr='Gönderim hatası: '+e.message;}
+}
+async function loadFriends(){
+  friendsLoading=true;friendsErr=null;renderSide();
+  try{
+    await publishScore();
+    const list=await window.storage.list('player:',true);
+    const players=[];
+    if(list&&list.keys)for(const k of list.keys){try{const res=await window.storage.get(k,true);if(res&&res.value)players.push(JSON.parse(res.value));}catch(e){}}
+    friendsData=players;
+  }catch(e){friendsErr='Yükleme hatası: '+e.message;friendsData=[];}
+  friendsLoading=false;renderSide();
+}
+
+// ═══════════════════════════════════
+//  SKY
+// ═══════════════════════════════════
+function upSky(){
+  const s=season();
+  scene.background.setHex(s.sky);scene.fog.color.setHex(s.fog);
+  skyDome.material.color.setHex(s.sky);gndMat.color.setHex(s.gnd);
+  starsObj.visible=(s.id==='wi');
+  sunSph.visible=(s.id!=='wi');sunHalo.visible=(s.id!=='wi');sunHalo2.visible=(s.id!=='wi');
+  moonSph.visible=(s.id==='wi');moonHalo.visible=(s.id==='wi');
+  const sCol={sp:0xfff2c0,su:0xfff2a0,au:0xffc878,wi:0xccddff};
+  sunSph.material.color.setHex(sCol[s.id]||0xfff2a0);
+  const aCol={sp:0xaaeebb,su:0xc8f0b0,au:0xe6c098,wi:0xc0d4ee};
+  ambL.color.setHex(aCol[s.id]||0xaaeebb);
+  const hCol={sp:0xbfe6ff,su:0xb0e8ff,au:0xffd9b0,wi:0xdbeaff};
+  hemiL.color.setHex(hCol[s.id]||0xbfe6ff);
+  const lowCol={sp:0xeaf6ff,su:0xeefbff,au:0xffe8d0,wi:0xf0f6ff};
+  skyDomeLow.material.color.setHex(lowCol[s.id]||0xeaf6ff);
+}
+
+// ═══════════════════════════════════
+//  SAVE / LOAD
+// ═══════════════════════════════════
+function saveGame(){
+  try{
+    if(cUser&&cUser!=='Misafir'){
+      const users=getUsers();
+      if(!users[cUser])users[cUser]={pw:'',fn:farmName};
+      users[cUser].st={...S,log:logLines.slice(0,50)};
+      saveUsers(users);
+    }
+    toast('💾 Kaydedildi!','good');
+  }catch(e){toast('❌ Kayıt hatası','bad');}
+}
+function loadSave(){
+  try{
+    const users=getUsers();
+    if(cUser&&users[cUser]&&users[cUser].st){Object.assign(S,users[cUser].st);logLines=S.log||[];addLog('💾 Kayıt yüklendi.','good');}
+  }catch(e){}
+}
+
+// ═══════════════════════════════════
+//  ANA DÖNGÜ
+// ═══════════════════════════════════
+let lastT=0,gT=0;
+function animate(ts){
+  requestAnimationFrame(animate);
+  const dt=Math.min((ts-lastT)/1000,.055);lastT=ts;gT=ts;
+
+  // Bulut hareketi
+  scene.children.filter(c=>c.isGroup&&c.children.length>=3&&c.position.y>20).forEach(c=>{c.position.x+=dt*.55;if(c.position.x>72)c.position.x=-72;});
+  // Bitki sallantısı
+  pMeshes.forEach(m=>{if(m)m.rotation.z=Math.sin(ts*.0013+m.position.x*.28)*.045;});
+  // Güneş
+  sunHalo.rotation.z+=dt*.4;
+  // Değirmen
+  if(windmillG.userData.blades)windmillG.userData.blades.rotation.z+=dt*(S.weather==='windy'?2.8:.9);
+  // Yağmur/kar
+  if(rainObj.visible){const pos=rainObj.geometry.attributes.position;for(let i=0;i<pos.count;i++){pos.setY(i,((pos.getY(i)-8*dt+35)%35));pos.setX(i,pos.getX(i)+dt*.5);}pos.needsUpdate=true;}
+  if(snowObj.visible){const pos=snowObj.geometry.attributes.position;for(let i=0;i<pos.count;i++){pos.setY(i,((pos.getY(i)-1.5*dt+32)%32));pos.setX(i,pos.getX(i)+Math.sin(ts*.002)*.01);}pos.needsUpdate=true;}
+
+  // TRAKTÖR
+  if(S.owned&&S.driveMode){
+    updateDriving(dt);
+  }else{
+    upTractor(dt);
+    // Kamerayı normal moda döndür
+    if(!S.driveMode&&(camO.r!==camCurrent.r||camO.th!==camCurrent.th)){
+      camCurrent.r=camO.r;camCurrent.th=camO.th;camCurrent.ph=camO.ph;
+    }
+  }
+  upExhaust();
+
+  // Partiküller
+  updateParticles(dt);
+  drawParticles();
+
+  renderer.render(scene,camera);
+}
+
+// ═══════════════════════════════════
+//  RESIZE
+// ═══════════════════════════════════
+function onResize(){
+  const W=window.innerWidth,H=window.innerHeight;
+  renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
+  resizePCanvas();
+}
+window.addEventListener('resize',onResize);onResize();
+
+// ═══════════════════════════════════
+//  BAŞLATMA
+// ═══════════════════════════════════
+function startGame(){
+  try{
+    loadSave();buildSeedBtns();buildGH();buildSpr();
+    if(S.owned.tractor)document.getElementById('fpill').style.display='flex';
+    if(S.owned.fishing_rod)document.getElementById('fpop').style.display='flex';
+    if(S.owned.solar)solarG.visible=true;
+    // Drive modunu sıfırla (yüklemede güvenli)
+    if(S.driveMode){S.driveMode=false;}
+    ['hud','side','toolbar','sbadge','wbadge','lvbadge','infob'].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.style.display=id==='side'?'flex':'block';
+    });
+    document.getElementById('npill').style.display='flex';
+    setupDpad();
+    rollWeather();upSky();updateHUD();setSide('trk');
+    S.cells.forEach((_,i)=>refCell(i));
+    addLog(`🌾 ${farmName}'a hoş geldin, ${cUser}! 🌻`,'good');
+    addLog(`🚜 Traktör al → "Sürmek" butonuyla WASD ile tarlayı gez!`,'good');
+    if(window.innerWidth<=700){
+      document.getElementById('mob-side-btn').style.display='flex';
+      document.getElementById('dpad').style.display='none'; // sadece drive modunda açılır
+    }
+  }catch(err){alert('Oyun başlatma hatası: '+err.message);console.error(err);}
+}
+
+// Render döngüsünü hemen başlat (login arkaplanı için)
+requestAnimationFrame(animate);
+
+// ═══════════════════════════════════
+//  MOBİL
+// ═══════════════════════════════════
+function isMobile(){return window.innerWidth<=700;}
+function toggleMobSide(){
+  const side=document.getElementById('side');const ov=document.getElementById('mob-overlay');
+  const isOpen=side.classList.contains('mob-open');
+  if(isOpen){closeMobSide();}else{side.classList.add('mob-open');ov.classList.add('mob-open');}
+}
+function closeMobSide(){
+  document.getElementById('side').classList.remove('mob-open');
+  document.getElementById('mob-overlay').classList.remove('mob-open');
+}
+
+// Side tab'lara tıklanınca mobilde paneli aç
+document.querySelectorAll('.stb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(isMobile()){document.getElementById('side').classList.add('mob-open');document.getElementById('mob-overlay').classList.add('mob-open');}
+  });
+});
+
+// Swipe ile popup kapatma
+['mktpop','fishpop','lvpop'].forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  let startY=0;
+  el.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchmove',e=>{
+    if(e.touches[0].clientY-startY>60){
+      if(id==='mktpop')closeMkt&&closeMkt();
+      if(id==='fishpop')closeFish&&closeFish();
+      if(id==='lvpop')closeLvPop&&closeLvPop();
+    }
+  },{passive:true});
+});
+
+// Klavye kısayol ipucu
+window.addEventListener('keydown',e=>{
+  if(e.key==='?'||e.key=='/'){
+    toast('Kısayollar: 1-5 Araç · WASD Sürüş (Drive modda) · Ctrl+D Drive Modu','');
+  }
+});
+</script>
+</body>
+</html>
